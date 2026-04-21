@@ -4,6 +4,8 @@ class_name Item
 @export var viewing_base_rotation: Vector3
 @export var viewing_base_scale: Vector3 = Vector3.ONE
 
+var is_consuming_input: bool
+
 func on_focus_gained():
 	pass
 	

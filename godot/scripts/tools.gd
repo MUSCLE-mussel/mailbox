@@ -5,12 +5,21 @@ class_name _Tools
 func find_parent_by_type(node: Node, clss_name: String, recursive: bool = true) -> Node:
 	var parent: = node.get_parent()
 	if parent != null:
+		if does_script_inherit_from(parent.get_script(), clss_name):
+			return parent
 		if parent.is_class(clss_name) || get_class_name(parent) == clss_name:
 			return parent
 		if recursive:
 			return find_parent_by_type(parent, clss_name, true)
 	return null
 
+func does_script_inherit_from(script: Script, clss_name: String, check_self: bool = true) -> bool:
+	if script == null:
+		return false
+	if check_self && script.get_global_name() == clss_name:
+		return true
+	return does_script_inherit_from(script.get_base_script(), clss_name)
+	
 func get_class_name(object: Object) -> String:
 	if not object:
 		return type_string(TYPE_NIL)

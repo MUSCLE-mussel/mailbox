@@ -13,10 +13,201 @@ size = Vector3(0.17382813, 0.16601563, 0.16308594)
 height = 0.103515625
 radius = 0.15722656
 
-[node name="gameboy" unique_id=1652467040 node_paths=PackedStringArray("dpad_left_collider") instance=ExtResource("1_l7tuu")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_8noqh"]
+size = Vector3(0.37304688, 0.14038086, 0.24511719)
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_bl50p"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:dpad"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_8noqh"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:dpad"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_ldcwh"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:dpad"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_0coaa"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:dpad"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8noqh"]
+animation = &"power_switch"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ldcwh"]
+animation = &"a"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0coaa"]
+animation = &"b"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_c3241"]
+animation = &"dpad_up"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_850tp"]
+animation = &"dpad_down"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l5b2h"]
+animation = &"dpad_left"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wkwkg"]
+animation = &"dpad_right"
+use_custom_timeline = true
+timeline_length = 1.0
+stretch_time_scale = true
+start_offset = 0.0
+loop_mode = 0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bl50p"]
+animation = &"_tpose"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_c3241"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:a"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_850tp"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:b"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ldcwh"]
+filter_enabled = true
+filters = ["Armature/Skeleton3D:power_switch"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_l5b2h"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_wkwkg"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_3ba6s"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_206pj"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_kfybk"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_36mbw"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_0coaa"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_3ba6s"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_206pj"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_kx51g"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_gwron"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_ouaj8"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_8kk0c"]
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_c3241"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bl50p"]
+graph_offset = Vector2(739.7556, 15.34433)
+nodes/output/position = Vector2(2180, 120)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_bl50p")
+nodes/Animation/position = Vector2(-560, -20)
+nodes/Blend2/node = SubResource("AnimationNodeBlend2_ldcwh")
+nodes/Blend2/position = Vector2(-340, 120)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_8noqh")
+"nodes/Animation 2/position" = Vector2(-560, 280)
+nodes/power_switch/node = SubResource("AnimationNodeTimeSeek_c3241")
+nodes/power_switch/position = Vector2(-560, 460)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_0coaa")
+nodes/TimeScale/position = Vector2(-560, 640)
+"nodes/Blend2 2/node" = SubResource("AnimationNodeBlend2_c3241")
+"nodes/Blend2 2/position" = Vector2(40, 120)
+"nodes/Blend2 3/node" = SubResource("AnimationNodeBlend2_850tp")
+"nodes/Blend2 3/position" = Vector2(400, 120)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_ldcwh")
+"nodes/Animation 3/position" = Vector2(-140, 280)
+nodes/a/node = SubResource("AnimationNodeTimeSeek_3ba6s")
+nodes/a/position = Vector2(-140, 460)
+"nodes/TimeScale 2/node" = SubResource("AnimationNodeTimeScale_l5b2h")
+"nodes/TimeScale 2/position" = Vector2(-140, 640)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_0coaa")
+"nodes/Animation 4/position" = Vector2(200, 280)
+nodes/b/node = SubResource("AnimationNodeTimeSeek_206pj")
+nodes/b/position = Vector2(220, 440)
+"nodes/TimeScale 3/node" = SubResource("AnimationNodeTimeScale_wkwkg")
+"nodes/TimeScale 3/position" = Vector2(220, 620)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_0coaa")
+nodes/Add2/position = Vector2(820, 100)
+"nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_bl50p")
+"nodes/Add2 2/position" = Vector2(1180, 100)
+"nodes/Add2 3/node" = SubResource("AnimationNodeAdd2_8noqh")
+"nodes/Add2 3/position" = Vector2(1560, 100)
+"nodes/Add2 4/node" = SubResource("AnimationNodeAdd2_ldcwh")
+"nodes/Add2 4/position" = Vector2(1940, 100)
+"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_c3241")
+"nodes/Animation 5/position" = Vector2(620, 300)
+nodes/dpad_up/node = SubResource("AnimationNodeTimeSeek_8kk0c")
+nodes/dpad_up/position = Vector2(620, 480)
+"nodes/TimeScale 4/node" = SubResource("AnimationNodeTimeScale_3ba6s")
+"nodes/TimeScale 4/position" = Vector2(620, 640)
+"nodes/Animation 6/node" = SubResource("AnimationNodeAnimation_850tp")
+"nodes/Animation 6/position" = Vector2(1000, 320)
+nodes/dpad_down/node = SubResource("AnimationNodeTimeSeek_kx51g")
+nodes/dpad_down/position = Vector2(1000, 500)
+"nodes/TimeScale 5/node" = SubResource("AnimationNodeTimeScale_206pj")
+"nodes/TimeScale 5/position" = Vector2(1000, 660)
+"nodes/Animation 7/node" = SubResource("AnimationNodeAnimation_l5b2h")
+"nodes/Animation 7/position" = Vector2(1380, 340)
+nodes/dpad_left/node = SubResource("AnimationNodeTimeSeek_gwron")
+nodes/dpad_left/position = Vector2(1380, 520)
+"nodes/TimeScale 6/node" = SubResource("AnimationNodeTimeScale_kfybk")
+"nodes/TimeScale 6/position" = Vector2(1380, 700)
+"nodes/Animation 8/node" = SubResource("AnimationNodeAnimation_wkwkg")
+"nodes/Animation 8/position" = Vector2(1740, 340)
+nodes/dpad_right/node = SubResource("AnimationNodeTimeSeek_ouaj8")
+nodes/dpad_right/position = Vector2(1740, 520)
+"nodes/TimeScale 7/node" = SubResource("AnimationNodeTimeScale_36mbw")
+"nodes/TimeScale 7/position" = Vector2(1740, 700)
+node_connections = [&"output", 0, &"Add2 4", &"Blend2", 0, &"Animation", &"Blend2", 1, &"TimeScale", &"power_switch", 0, &"Animation 2", &"TimeScale", 0, &"power_switch", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"TimeScale 2", &"Blend2 3", 0, &"Blend2 2", &"Blend2 3", 1, &"TimeScale 3", &"a", 0, &"Animation 3", &"TimeScale 2", 0, &"a", &"b", 0, &"Animation 4", &"TimeScale 3", 0, &"b", &"Add2", 0, &"Blend2 3", &"Add2", 1, &"TimeScale 4", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"TimeScale 5", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"TimeScale 6", &"Add2 4", 0, &"Add2 3", &"Add2 4", 1, &"TimeScale 7", &"dpad_up", 0, &"Animation 5", &"TimeScale 4", 0, &"dpad_up", &"dpad_down", 0, &"Animation 6", &"TimeScale 5", 0, &"dpad_down", &"dpad_left", 0, &"Animation 7", &"TimeScale 6", 0, &"dpad_left", &"dpad_right", 0, &"Animation 8", &"TimeScale 7", 0, &"dpad_right"]
+
+[node name="gameboy" unique_id=600752107 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree") instance=ExtResource("1_l7tuu")]
 script = ExtResource("2_bl50p")
-dpad_left_collider = NodePath("dpad_left_area/dpad_left_collider")
+dpad_left_area = NodePath("dpad_left_area")
+dpad_right_area = NodePath("dpad_right_area")
+dpad_up_area = NodePath("dpad_up_area")
+dpad_down_area = NodePath("dpad_down_area")
+a_area = NodePath("a_area")
+b_area = NodePath("b_area")
+power_switch_area = NodePath("power_switch_area")
+animation_tree = NodePath("AnimationTree")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
+
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(526405834) index="0" unique_id=1122612707]
+bones/2/rotation = Quaternion(0.7071068, -1.8647015e-07, -2.643272e-08, 0.7071068)
 
 [node name="item_area" type="Area3D" parent="." index="1" unique_id=1759315604]
 collision_layer = 4
@@ -57,18 +248,51 @@ collision_mask = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.5725131, 0.28210306)
 shape = SubResource("BoxShape3D_bl50p")
 
-[node name="a_area" type="Area3D" parent="." index="6" unique_id=723674048]
+[node name="b_area" type="Area3D" parent="." index="6" unique_id=723674048]
 collision_layer = 8
 collision_mask = 0
 
-[node name="a_collider" type="CollisionShape3D" parent="a_area" index="0" unique_id=1239088858]
+[node name="b_collider" type="CollisionShape3D" parent="b_area" index="0" unique_id=1239088858]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.27365053, -0.4643267, 0.31004918)
 shape = SubResource("CylinderShape3D_bl50p")
 
-[node name="b_area" type="Area3D" parent="." index="7" unique_id=469782139]
+[node name="a_area" type="Area3D" parent="." index="7" unique_id=469782139]
 collision_layer = 8
 collision_mask = 0
 
-[node name="b_collider" type="CollisionShape3D" parent="b_area" index="0" unique_id=18843300]
+[node name="a_collider" type="CollisionShape3D" parent="a_area" index="0" unique_id=18843300]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.63370776, -0.2966665, 0.31004918)
 shape = SubResource("CylinderShape3D_bl50p")
+
+[node name="power_switch_area" type="Area3D" parent="." index="8" unique_id=1535921541]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="power_switch_area" index="0" unique_id=913691901]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5712409, 1.4738008, 0)
+shape = SubResource("BoxShape3D_8noqh")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="10" unique_id=1142543275]
+tree_root = SubResource("AnimationNodeBlendTree_bl50p")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Blend2/blend_amount = 1.0
+parameters/power_switch/seek_request = -1.0
+parameters/TimeScale/scale = 0.0
+"parameters/Blend2 2/blend_amount" = 1.0
+"parameters/Blend2 3/blend_amount" = 1.0
+parameters/a/seek_request = -1.0
+"parameters/TimeScale 2/scale" = 0.0
+parameters/b/seek_request = -1.0
+"parameters/TimeScale 3/scale" = 0.0
+parameters/Add2/add_amount = 1.0
+"parameters/Add2 2/add_amount" = 1.0
+"parameters/Add2 3/add_amount" = 1.0
+"parameters/Add2 4/add_amount" = 1.0
+parameters/dpad_up/seek_request = -1.0
+"parameters/TimeScale 4/scale" = 0.0
+parameters/dpad_down/seek_request = -1.0
+"parameters/TimeScale 5/scale" = 0.0
+parameters/dpad_left/seek_request = -1.0
+"parameters/TimeScale 6/scale" = 0.0
+parameters/dpad_right/seek_request = -1.0
+"parameters/TimeScale 7/scale" = 0.0

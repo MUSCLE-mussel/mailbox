@@ -68,7 +68,7 @@ filters = ["box/Skeleton3D:tape.000", "box/Skeleton3D:tape.001", "box/Skeleton3D
 [sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_ry43h"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_ry43h"]
-graph_offset = Vector2(-399.9394, -223.61652)
+graph_offset = Vector2(-1107.95, -118.459946)
 nodes/output/position = Vector2(1240, -80)
 nodes/base/node = SubResource("AnimationNodeAnimation_brpd5")
 nodes/base/position = Vector2(-940, -40)
@@ -156,28 +156,28 @@ shape = SubResource("BoxShape3D_faous")
 
 [node name="Skeleton3D" parent="box" parent_id_path=PackedInt32Array(1852968673) index="0" unique_id=577330285]
 bones/1/rotation = Quaternion(0.7071066, 2.0097178e-14, 1.6858729e-07, 0.70710695)
-bones/2/rotation = Quaternion(-0.7062113, 2.5118796e-14, -1.68374e-07, 0.70800114)
-bones/3/rotation = Quaternion(2.9502792e-07, 4.2146862e-08, -0.70710665, 0.7071069)
-bones/4/rotation = Quaternion(-4.214682e-08, -4.214683e-08, 0.70710665, 0.7071069)
+bones/2/rotation = Quaternion(-0.7071066, 2.5121473e-14, -1.6858745e-07, 0.70710695)
+bones/3/rotation = Quaternion(2.94813e-07, 4.2093625e-08, -0.7062114, 0.7080011)
+bones/4/rotation = Quaternion(-1.5871223e-08, -2.3583749e-07, -0.8558535, -0.5172183)
 bones/5/rotation = Quaternion(-0.7071068, 8.42937e-08, -8.42937e-08, 0.7071068)
-bones/5/scale = Vector3(2, 2, 2)
-bones/6/scale = Vector3(2, 2, 2)
-bones/7/scale = Vector3(2, 2, 2)
-bones/8/scale = Vector3(2, 2, 2)
-bones/9/scale = Vector3(2, 2, 2)
-bones/10/scale = Vector3(2, 2, 2)
-bones/11/scale = Vector3(2, 2, 2)
-bones/12/scale = Vector3(2, 2, 2)
-bones/13/scale = Vector3(2, 2, 2)
+bones/5/scale = Vector3(0, 0, 0)
+bones/6/scale = Vector3(0, 0, 0)
+bones/7/scale = Vector3(0, 0, 0)
+bones/8/scale = Vector3(0, 0, 0)
+bones/9/scale = Vector3(0, 0, 0)
+bones/10/scale = Vector3(0, 0, 0)
+bones/11/scale = Vector3(0, 0, 0)
+bones/12/scale = Vector3(0, 0, 0)
+bones/13/scale = Vector3(0, 0, 0)
 bones/14/rotation = Quaternion(-0.7071068, 4.7915422e-21, 4.7915422e-21, 0.7071068)
-bones/14/scale = Vector3(2, 2, 2)
-bones/15/scale = Vector3(2, 2, 2)
-bones/16/scale = Vector3(2, 2, 2)
+bones/14/scale = Vector3(0, 0, 0)
+bones/15/scale = Vector3(0, 0, 0)
+bones/16/scale = Vector3(0, 0, 0)
 
 [node name="content_parent" type="Marker3D" parent="." index="3" unique_id=846267319]
 transform = Transform3D(-0.3564026, -0.18159623, -7.937824e-09, 0, -1.7484556e-08, 0.4, -0.18159623, 0.3564026, 1.5578852e-08, 0, -0.54047656, 0)
 
-[node name="gameboy" parent="content_parent" index="0" unique_id=634348738 instance=ExtResource("3_c2ln5")]
+[node name="gameboy" parent="content_parent" index="0" unique_id=1598683642 instance=ExtResource("3_c2ln5")]
 
 [node name="unlock_path" type="Path3D" parent="." index="4" unique_id=1863239906]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87629116, -1.4025981)
@@ -210,7 +210,7 @@ transform = Transform3D(1, -7.1054274e-15, -1.0444978e-12, 7.1054274e-15, 1, -2.
 shape = SubResource("BoxShape3D_c2ln5")
 
 [node name="flap_r_attachment" type="BoneAttachment3D" parent="." index="7" unique_id=835983719]
-transform = Transform3D(1, 1.563194e-13, 2.3841875e-07, -2.3841797e-07, 0.0025310514, 0.9999968, -6.0333605e-10, -0.9999968, 0.0025310514, -2.842171e-14, 0.72823656, 1.3276107)
+transform = Transform3D(1, 1.7053026e-13, 2.3841872e-07, -2.3841872e-07, 4.768371e-07, 0.9999999, 0, -0.9999999, 4.7683704e-07, -2.842171e-14, 0.72823656, 1.3276107)
 bone_name = "flap.r"
 bone_idx = 2
 use_external_skeleton = true
@@ -224,7 +224,7 @@ transform = Transform3D(1, 0, -9.826806e-12, -2.1316282e-14, 1, 0, 7.2120088e-12
 shape = SubResource("BoxShape3D_brpd5")
 
 [node name="flap_f_attachment" type="BoneAttachment3D" parent="." index="8" unique_id=1453285383]
-transform = Transform3D(3.5762775e-07, 0.99999994, -1.1920919e-07, -0.9999999, 3.5762787e-07, -4.172325e-07, -4.1723249e-07, 1.1920932e-07, 0.99999994, -0.925918, 0.7946934, -4.7367422e-08)
+transform = Transform3D(0.0025309324, 0.99999684, -1.1837737e-07, -0.9999968, 0.0025309322, -4.173051e-07, -4.170042e-07, 1.1943317e-07, 0.99999994, -0.925918, 0.7946934, -4.7367422e-08)
 bone_name = "flap.f"
 bone_idx = 3
 use_external_skeleton = true
@@ -238,7 +238,7 @@ transform = Transform3D(1, 2.9802289e-08, -8.014922e-12, -4.4703486e-07, 1, -3.6
 shape = SubResource("BoxShape3D_telwu")
 
 [node name="flap_b_attachment" type="BoneAttachment3D" parent="." index="9" unique_id=2135322237]
-transform = Transform3D(3.5762787e-07, -0.99999994, 1.1920932e-07, 0.9999999, 3.5762784e-07, 5.960465e-08, -5.960469e-08, 1.1920932e-07, 0.99999994, 0.925918, 0.7946934, -4.7367422e-08)
+transform = Transform3D(-0.46497047, -0.88532615, 5.0954435e-07, 0.8853261, -0.46497044, 4.4687152e-07, -1.5870401e-07, 6.5889503e-07, 0.99999994, 0.925918, 0.7946934, -4.7367422e-08)
 bone_name = "flap.b"
 bone_idx = 4
 use_external_skeleton = true

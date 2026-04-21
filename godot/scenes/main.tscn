@@ -5,7 +5,6 @@
 [ext_resource type="Theme" uid="uid://ci68qf23fewv5" path="res://ui_theme.tres" id="5_85g3d"]
 [ext_resource type="PackedScene" uid="uid://bj0a6w6yln2jn" path="res://scenes/gameboy.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8ssfw6m4wf0j" path="res://scenes/mailbox.tscn" id="6_o6xl0"]
-[ext_resource type="Script" uid="uid://ra67lwaha8b7" path="res://gameboy.gd" id="6_tipki"]
 [ext_resource type="Script" uid="uid://dmfbvrxq6u5iw" path="res://scripts/object_viewer.gd" id="7_o6xl0"]
 
 [node name="main" type="Node3D" unique_id=7951666]
@@ -42,11 +41,11 @@ viewing_parent = NodePath("../../world/viewing_parent")
 [node name="mailbox" parent="world" unique_id=25785074 instance=ExtResource("6_o6xl0")]
 visible = false
 
-[node name="box" parent="world/mailbox/box/content_parent" parent_id_path=PackedInt32Array(25785074, 155672104) index="0" unique_id=1168527768 instance=ExtResource("4_tipki")]
+[node name="box" parent="world/mailbox/box/content_parent" parent_id_path=PackedInt32Array(25785074, 155672104) index="0" unique_id=1009196777 instance=ExtResource("4_tipki")]
 transform = Transform3D(1.4802341, 0.5694762, 0.12488067, -0.57653284, 1.379172, 0.5445054, 0.08664912, -0.55188155, 1.4896008, 0, 1.590909, 0)
 visible = false
 
-[node name="Skeleton3D" parent="world/mailbox/box/content_parent/box/box" parent_id_path=PackedInt32Array(1168527768, 2057245495) index="0" unique_id=917387268]
+[node name="Skeleton3D" parent="world/mailbox/box/content_parent/box/box" parent_id_path=PackedInt32Array(1009196777, 1852968673) index="0" unique_id=577330285]
 bones/2/rotation = Quaternion(-0.7071066, 2.5121473e-14, -1.6858745e-07, 0.70710695)
 bones/3/rotation = Quaternion(2.94813e-07, 4.2093625e-08, -0.7062114, 0.7080011)
 bones/4/rotation = Quaternion(-1.5871223e-08, -2.3583749e-07, -0.8558535, -0.5172183)
@@ -86,10 +85,9 @@ transform = Transform3D(0.90571684, -0.21764983, 0.36373836, 0, 0.8581097, 0.513
 [node name="viewing_parent" type="Node3D" parent="world" unique_id=2008776012]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6331539, 0)
 
-[node name="gameboy" parent="world/viewing_parent" unique_id=634348738 instance=ExtResource("5_tefeu")]
+[node name="gameboy" parent="world/viewing_parent" unique_id=1598683642 instance=ExtResource("5_tefeu")]
 transform = Transform3D(0.9249253, -0.064677075, 0.37460658, 0.06975647, 0.9975641, 0, -0.37369406, 0.026131233, 0.92718387, 0, 0, 0)
 visible = false
-script = ExtResource("6_tipki")
 
 [node name="ui" type="Control" parent="." unique_id=1108586680]
 layout_mode = 3

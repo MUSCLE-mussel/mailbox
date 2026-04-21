@@ -70,7 +70,8 @@ func _ready() -> void:
 	call_deferred("late_ready")
 	
 func late_ready():
-	set_state(GameState.MAILBOX)
+	set_state(GameState.OBJECT)
+	#set_state(GameState.MAILBOX)
 	#set_state(GameState.PARCEL)
 	
 func set_state(state: GameState):
@@ -131,6 +132,9 @@ func set_state(state: GameState):
 			box.can_unlock = true
 			
 		GameState.OBJECT:
+			# hack for debug
+			if current_item == null:
+				current_item = gameboy
 			assert(current_item != null)
 			
 			current_item.reparent(world, false)
@@ -216,7 +220,8 @@ func _process(delta: float) -> void:
 						return
 							
 		GameState.OBJECT:
-			viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
+			if !current_item.is_consuming_input:
+				viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
 			
 
 func on_notification_button_pressed() -> void:

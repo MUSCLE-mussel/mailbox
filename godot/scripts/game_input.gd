@@ -14,6 +14,9 @@ class Touch:
 	var just_released: bool
 	var just_canceled: bool
 	
+	func is_down() -> bool:
+		return !just_released && !just_canceled
+	
 var touch_stack: Array[Touch]
 
 var has_just_tapped: bool
@@ -24,6 +27,15 @@ var drag_delta: Vector2
 
 # private
 var frame_events: Array[InputEvent]
+
+func get_first_touch() -> Touch:
+	if touch_stack.size() == 0: return null
+	return touch_stack[0]
+	
+func get_touch_by_index(index: int) -> Touch:
+	for touch in touch_stack:
+		if touch.index == index: return touch
+	return null
 
 func _input(event):
 	if event is InputEventScreenTouch:
