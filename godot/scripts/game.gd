@@ -92,7 +92,8 @@ func set_state(state: GameState):
 				transition_tween.kill()
 				transition_tween = null
 			
-		GameState.OBJECT:	
+		GameState.OBJECT:
+			current_item.on_focus_lost()
 			current_item = null
 			viewer.target = null
 	
@@ -136,6 +137,8 @@ func set_state(state: GameState):
 			current_item.transform = viewing_parent.transform * current_item.get_base_viewing_transform()
 			
 			viewer.target = current_item
+			
+			current_item.on_focus_gained()
 	
 func _process(delta: float) -> void:
 	

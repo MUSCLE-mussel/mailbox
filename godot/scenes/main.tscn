@@ -5,6 +5,7 @@
 [ext_resource type="Theme" uid="uid://ci68qf23fewv5" path="res://ui_theme.tres" id="5_85g3d"]
 [ext_resource type="PackedScene" uid="uid://bj0a6w6yln2jn" path="res://scenes/gameboy.tscn" id="5_tefeu"]
 [ext_resource type="PackedScene" uid="uid://b8ssfw6m4wf0j" path="res://scenes/mailbox.tscn" id="6_o6xl0"]
+[ext_resource type="Script" uid="uid://ra67lwaha8b7" path="res://gameboy.gd" id="6_tipki"]
 [ext_resource type="Script" uid="uid://dmfbvrxq6u5iw" path="res://scripts/object_viewer.gd" id="7_o6xl0"]
 
 [node name="main" type="Node3D" unique_id=7951666]
@@ -88,6 +89,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6331539, 0)
 [node name="gameboy" parent="world/viewing_parent" unique_id=634348738 instance=ExtResource("5_tefeu")]
 transform = Transform3D(0.9249253, -0.064677075, 0.37460658, 0.06975647, 0.9975641, 0, -0.37369406, 0.026131233, 0.92718387, 0, 0, 0)
 visible = false
+script = ExtResource("6_tipki")
 
 [node name="ui" type="Control" parent="." unique_id=1108586680]
 layout_mode = 3

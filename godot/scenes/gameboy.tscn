@@ -1,18 +1,74 @@
 [gd_scene format=3 uid="uid://bj0a6w6yln2jn"]
 
 [ext_resource type="PackedScene" uid="uid://byofc4xyx62b1" path="res://meshes/gameboy/gameboy.glb" id="1_l7tuu"]
-[ext_resource type="Script" uid="uid://daecdr8allm3b" path="res://scripts/item.gd" id="2_bl50p"]
+[ext_resource type="Script" uid="uid://ra67lwaha8b7" path="res://gameboy.gd" id="2_bl50p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7tuu"]
 size = Vector3(2.170166, 2.6782227, 0.87109375)
 
-[node name="gameboy" unique_id=634348738 instance=ExtResource("1_l7tuu")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_bl50p"]
+size = Vector3(0.17382813, 0.16601563, 0.16308594)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bl50p"]
+height = 0.103515625
+radius = 0.15722656
+
+[node name="gameboy" unique_id=1652467040 node_paths=PackedStringArray("dpad_left_collider") instance=ExtResource("1_l7tuu")]
 script = ExtResource("2_bl50p")
+dpad_left_collider = NodePath("dpad_left_area/dpad_left_collider")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
 
-[node name="area" type="Area3D" parent="." index="1" unique_id=1759315604]
+[node name="item_area" type="Area3D" parent="." index="1" unique_id=1759315604]
 collision_layer = 4
 
-[node name="collider" type="CollisionShape3D" parent="area" index="0" unique_id=1621944228]
+[node name="collider" type="CollisionShape3D" parent="item_area" index="0" unique_id=1621944228]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22094727, 0)
 shape = SubResource("BoxShape3D_l7tuu")
+
+[node name="dpad_left_area" type="Area3D" parent="." index="2" unique_id=817833841]
+collision_layer = 8
+collision_mask = 0
+
+[node name="dpad_left_collider" type="CollisionShape3D" parent="dpad_left_area" index="0" unique_id=2090146515]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605414, -0.4117213, 0.28210306)
+shape = SubResource("BoxShape3D_bl50p")
+
+[node name="dpad_right_area" type="Area3D" parent="." index="3" unique_id=1967582123]
+collision_layer = 8
+collision_mask = 0
+
+[node name="dpad_right_collider" type="CollisionShape3D" parent="dpad_right_area" index="0" unique_id=927985838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29355365, -0.4117213, 0.28210306)
+shape = SubResource("BoxShape3D_bl50p")
+
+[node name="dpad_up_area" type="Area3D" parent="." index="4" unique_id=2125640431]
+collision_layer = 8
+collision_mask = 0
+
+[node name="dpad_up_collider" type="CollisionShape3D" parent="dpad_up_area" index="0" unique_id=1262758022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.2509296, 0.28210306)
+shape = SubResource("BoxShape3D_bl50p")
+
+[node name="dpad_down_area" type="Area3D" parent="." index="5" unique_id=1475070427]
+collision_layer = 8
+collision_mask = 0
+
+[node name="dpad_down_collider" type="CollisionShape3D" parent="dpad_down_area" index="0" unique_id=350150029]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.5725131, 0.28210306)
+shape = SubResource("BoxShape3D_bl50p")
+
+[node name="a_area" type="Area3D" parent="." index="6" unique_id=723674048]
+collision_layer = 8
+collision_mask = 0
+
+[node name="a_collider" type="CollisionShape3D" parent="a_area" index="0" unique_id=1239088858]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.27365053, -0.4643267, 0.31004918)
+shape = SubResource("CylinderShape3D_bl50p")
+
+[node name="b_area" type="Area3D" parent="." index="7" unique_id=469782139]
+collision_layer = 8
+collision_mask = 0
+
+[node name="b_collider" type="CollisionShape3D" parent="b_area" index="0" unique_id=18843300]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.63370776, -0.2966665, 0.31004918)
+shape = SubResource("CylinderShape3D_bl50p")
