@@ -13,10 +13,12 @@ class_name Box
 @export var viewing_base_rotation: Vector3
 @export var viewing_base_scale: Vector3 = Vector3.ONE
 
-@export var flap_l_area: Area3D
-@export var flap_r_area: Area3D
-@export var flap_f_area: Area3D
-@export var flap_b_area: Area3D
+@export var flap_l_area: CollisionObject3D
+@export var flap_r_area: CollisionObject3D
+@export var flap_f_area: CollisionObject3D
+@export var flap_b_area: CollisionObject3D
+
+@export var foam_spawner: FoamSpawner
 
 var can_unlock: bool = false
 var is_unlocked: bool = false
@@ -72,7 +74,8 @@ func _process(dt: float):
 	
 	if is_unlocked:
 		if GameInput.has_just_tapped:
-			var area = Tools.get_area_under_screen_position(GameInput.tap_position, 0b0000_0001)
+			var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0111)
+			print(area)
 			
 			match area:
 				flap_l_area:
@@ -88,6 +91,7 @@ func _process(dt: float):
 						close_flap(flap_r)
 						
 				flap_f_area:
+					print("agga")
 					if !flap_f.open:
 						open_flap(flap_f)
 					else:
@@ -116,6 +120,8 @@ func reset():
 	reset_flap(flap_r)
 	reset_flap(flap_f)
 	reset_flap(flap_b)
+	
+	foam_spawner.clear_spawned_foam()
 
 func update_tape_interaction():
 	if is_unlocked || !can_unlock:
@@ -203,5 +209,25 @@ func close_flap(flap: FlapData):
 		.set_ease(Tween.EASE_OUT)
 	flap.open = false
 	
-func are_all_flaps_open():
+func set_flap_opened(flap: FlapData):
+	if flap.tween != null: flap.tween.kill()
+	flap.tween = null
+	animation_tree.set(flap.property, 1.0)
+	flap.open = true
+	
+func set_all_flaps_opened():
+	set_flap_opened(flap_l)
+	set_flap_opened(flap_r)
+	set_flap_opened(flap_f)
+	set_flap_opened(flap_b)
+	
+func are_all_flaps_opened():
 	return flap_l.open && flap_r.open && flap_f.open && flap_b.open
+	
+func set_tape_unlocked():
+	is_unlocked = true
+	current_unlock_ratio = 1.0
+	target_unlock_ratio = 1.0
+	unlocking_touch_index = -1
+	animation_tree.set(&"parameters/tape_disable/add_amount", 1.0)
+	animation_tree.set(&"parameters/tape_seek/seek_request", 1.0)

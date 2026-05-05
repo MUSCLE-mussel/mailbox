@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Globals="*uid://35811dq48qkj"
 Tools="*uid://7n2g1i4padsm"
 GameInput="*uid://g83xh0xmdtxo"
 
@@ -48,10 +49,9 @@ pointing/emulate_touch_from_mouse=true
 
 [layer_names]
 
-3d_physics/layer_1="box"
-3d_physics/layer_2="mailbox"
-3d_physics/layer_3="item"
-3d_physics/layer_4="interactive"
+3d_physics/layer_1="interactive"
+3d_physics/layer_2="static"
+3d_physics/layer_3="dynamic"
 
 [physics]
 

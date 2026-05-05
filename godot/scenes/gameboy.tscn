@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bj0a6w6yln2jn"]
 
 [ext_resource type="PackedScene" uid="uid://byofc4xyx62b1" path="res://meshes/gameboy/gameboy.glb" id="1_l7tuu"]
-[ext_resource type="Script" uid="uid://ra67lwaha8b7" path="res://gameboy.gd" id="2_bl50p"]
+[ext_resource type="Script" uid="uid://ra67lwaha8b7" path="res://scripts/gameboy.gd" id="2_bl50p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7tuu"]
 size = Vector3(2.170166, 2.6782227, 0.87109375)

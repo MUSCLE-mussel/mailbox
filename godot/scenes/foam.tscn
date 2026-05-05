@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cx550f25rucv8"]
+
+[ext_resource type="PackedScene" uid="uid://tbg00rvp04nw" path="res://meshes/foam/foam.glb" id="1_21ey7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_21ey7"]
+radius = 0.105
+height = 0.43
+
+[node name="foam" type="RigidBody3D" unique_id=1678330288]
+collision_layer = 4
+collision_mask = 6
+
+[node name="collider" type="CollisionShape3D" parent="." unique_id=657759668]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_21ey7")
+
+[node name="mesh" parent="." unique_id=2019766719 instance=ExtResource("1_21ey7")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0)

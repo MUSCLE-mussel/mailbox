@@ -98,7 +98,7 @@ func process_input():
 	if !buttons_enabled: return
 	
 	if GameInput.has_just_tapped:
-		var tap_area: = Tools.get_area_under_screen_position(GameInput.tap_position, 0b0000_1000)
+		var tap_area: = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0001)
 		if tap_area == power_switch_area:
 			toggle_power()
 			
@@ -111,7 +111,7 @@ func process_input():
 	
 	for touch in GameInput.touch_stack:
 		if touch.just_pressed:
-			var touch_area: = Tools.get_area_under_screen_position(touch.position, 0b0000_1000)
+			var touch_area: = Tools.get_collision_under_screen_position(touch.position, 0b0000_0001)
 			match touch_area:
 				a_area:
 					a_state.touch_index = touch.index

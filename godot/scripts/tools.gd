@@ -32,7 +32,7 @@ func get_class_name(object: Object) -> String:
 		return script_path
 	return object_name
 	
-func get_area_under_screen_position(pos: Vector2, collision_mask: int = 0xFFFFFFFF, camera: Camera3D = null, ray_length: float = 100.0) -> Area3D:
+func get_collision_under_screen_position(pos: Vector2, collision_mask: int = 0xFFFFFFFF, camera: Camera3D = null, ray_length: float = 100.0) -> CollisionObject3D:
 	if camera == null:
 		camera = get_viewport().get_camera_3d()
 	var ray_origin: = camera.project_ray_origin(pos)
@@ -40,7 +40,7 @@ func get_area_under_screen_position(pos: Vector2, collision_mask: int = 0xFFFFFF
 	var query: = PhysicsRayQueryParameters3D.create(ray_origin, ray_origin + ray_normal * ray_length, collision_mask)
 	query.collide_with_areas = true
 	var result: = camera.get_world_3d().direct_space_state.intersect_ray(query)
-	return result.get("collider") as Area3D
+	return result.get("collider") as CollisionObject3D
 
 #   Calculate the line segment result_A > result_BtB that is the shortest route between
 #   two lines A and B. Calculate also the values of ratio_A and ratio_B where

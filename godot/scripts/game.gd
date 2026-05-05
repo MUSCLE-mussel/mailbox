@@ -1,4 +1,5 @@
 extends Node3D
+class_name Game
 
 # UI
 @export var notification_button: BaseButton;
@@ -36,6 +37,8 @@ const ANDROID_PLUGIN_NAME: = "MailboxAndroidPlugin"
 var android_plugin: Object;
 
 func _ready() -> void:
+	Globals.game = self
+	
 	if Engine.has_singleton(ANDROID_PLUGIN_NAME):
 		android_plugin = Engine.get_singleton(ANDROID_PLUGIN_NAME)
 		android_plugin.connect("post_notifications_permission_result_received", on_post_notifications_permission_result_received)
@@ -70,9 +73,12 @@ func _ready() -> void:
 	call_deferred("late_ready")
 	
 func late_ready():
-	set_state(GameState.OBJECT)
+	#set_state(GameState.OBJECT)
 	#set_state(GameState.MAILBOX)
-	#set_state(GameState.PARCEL)
+	set_state(GameState.PARCEL)
+	
+	box.set_tape_unlocked()
+	box.set_all_flaps_opened()
 	
 func set_state(state: GameState):
 	if state == current_state: return
@@ -81,6 +87,9 @@ func set_state(state: GameState):
 	match current_state:
 		GameState.MAILBOX:
 			mailbox.visible = false
+			# Hack prevent hidden mailbox colliders from being hit by raycasts
+			mailbox.closed_collider.disabled = true
+			mailbox.open_collider.disabled = true
 			box.visible = true
 			if transition_tween != null:
 				transition_tween.kill()
@@ -130,6 +139,8 @@ func set_state(state: GameState):
 			box.transform = viewing_parent.transform * box.get_base_viewing_transform()
 			box.reset()
 			box.can_unlock = true
+			box.foam_spawner.spawn_foam()
+
 			
 		GameState.OBJECT:
 			# hack for debug
@@ -152,7 +163,7 @@ func _process(delta: float) -> void:
 			if transition_tween != null: return
 			
 			if GameInput.has_just_tapped:
-				var area = Tools.get_area_under_screen_position(GameInput.tap_position, 0b0000_0011) # mailbox + box
+				var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0011) # mailbox + box
 				if area != null: 
 					var hit_box: = Tools.find_parent_by_type(area, "Box") as Box
 					if hit_box != null:
@@ -194,7 +205,7 @@ func _process(delta: float) -> void:
 			
 			if GameInput.has_just_tapped:
 				if true:
-					var item_area = Tools.get_area_under_screen_position(GameInput.tap_position, 0b0000_0101)
+					var item_area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0111)
 					if item_area != null:
 						var item = Tools.find_parent_by_type(item_area, "Item") as Item
 						if item == null: return
