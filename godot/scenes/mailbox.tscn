@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8ssfw6m4wf0j"]
 
-[ext_resource type="PackedScene" uid="uid://bfrbqshe04uuu" path="res://meshes/mailbox/mailbox.glb" id="1_3eaje"]
+[ext_resource type="PackedScene" uid="uid://b100hjrkso40a" path="res://meshes/mailbox/mailbox.glb" id="1_3eaje"]
 [ext_resource type="Script" uid="uid://yvidg6cdoya1" path="res://scripts/mailbox.gd" id="2_80nar"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3eaje"]
@@ -9,7 +9,7 @@ size = Vector3(2.2109375, 2.538086, 1.9338379)
 [sub_resource type="BoxShape3D" id="BoxShape3D_80nar"]
 size = Vector3(2.2109375, 2.538086, 0.42230225)
 
-[node name="mailbox" unique_id=25785074 node_paths=PackedStringArray("animation_player", "content_parent", "closed_collider", "opened_collider") instance=ExtResource("1_3eaje")]
+[node name="mailbox" unique_id=220009672 node_paths=PackedStringArray("animation_player", "content_parent", "closed_collider", "opened_collider") instance=ExtResource("1_3eaje")]
 script = ExtResource("2_80nar")
 animation_player = NodePath("AnimationPlayer")
 content_parent = NodePath("box/content_parent")
@@ -17,7 +17,6 @@ closed_collider = NodePath("area/closed_collider")
 opened_collider = NodePath("area/opened_collider")
 
 [node name="area" type="Area3D" parent="." index="0" unique_id=829349597]
-collision_layer = 2
 collision_mask = 0
 
 [node name="closed_collider" type="CollisionShape3D" parent="area" index="0" unique_id=2114456713]
@@ -29,5 +28,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7557678)
 shape = SubResource("BoxShape3D_80nar")
 disabled = true
 
-[node name="content_parent" type="Marker3D" parent="box" parent_id_path=PackedInt32Array(412267608) index="2" unique_id=155672104]
+[node name="content_parent" type="Marker3D" parent="box" parent_id_path=PackedInt32Array(1268553355) index="2" unique_id=155672104]
 transform = Transform3D(-0.30564967, 0, -0.31650954, 0, 0.44, 0, 0.31650954, 0, -0.30564967, 0, -0.7, 0)

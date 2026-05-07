@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/box.glb-6b71246dc1da11a84f499eed4bb3bdf2.scn"
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="RigidBody3D"
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true

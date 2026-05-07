@@ -4,8 +4,10 @@ class_name ObjectViewer
 @export var target: Node3D
 @export var camera: Camera3D
 @export var drag_speed: Vector2 = Vector2(1,1);
+@export var physics_drag_speed: Vector2 = Vector2(1,1);
 @export var drag_smooth_time: float = 0.05;
 @export var sample_count: int = 10;
+@export var max_input = 3.0
 
 class InputSample:
 	var input: Vector2
@@ -37,17 +39,30 @@ func update(delta: float, is_dragging: bool, input: Vector2):
 		for s in samples:
 			average_input += (s.dt / total_time) * s.input
 		
+		var input_length: = average_input.length()
+		if  input_length > max_input:
+			average_input = average_input / input_length * max_input
+		
 		smoothed_drag_input = average_input
 	else:
 		samples.clear()
 		smoothed_drag_input = Tools.time_independent_lerp_vec2(smoothed_drag_input, Vector2.ZERO, drag_smooth_time, delta)
 	
 	#print("%.2f, %s %v"%[delta, is_dragging, input])
-		
+	
+	var target_rigidbody: = target as RigidBody3D
+	
 	var x_axis = camera.get_camera_transform().basis.y
 	var y_axis = camera.get_camera_transform().basis.x
-	target.rotate(x_axis, smoothed_drag_input.x * drag_speed.x)
-	target.rotate(y_axis, smoothed_drag_input.y * drag_speed.y)
+	
+	if target_rigidbody == null:
+		target.rotate(x_axis, smoothed_drag_input.x * drag_speed.x)
+		target.rotate(y_axis, smoothed_drag_input.y * drag_speed.y)
+	else:
+		var torque: Vector3 = x_axis * smoothed_drag_input.x * physics_drag_speed.x + y_axis * smoothed_drag_input.y * physics_drag_speed.y
+		#print(torque)
+		target_rigidbody.apply_torque(torque)
+		#target_rigidbody.angular_velocity = clamp(target_rigidbody.angular_velocity, Vector3(-max_angular_velocity, -max_angular_velocity, -max_angular_velocity), Vector3(max_angular_velocity, max_angular_velocity, max_angular_velocity))
 
 func reset():
 	smoothed_drag_input = Vector2.ZERO

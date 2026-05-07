@@ -6,14 +6,17 @@
 [ext_resource type="Script" uid="uid://f6sdgqcgumce" path="res://scripts/foam_spawner.gd" id="4_brpd5"]
 [ext_resource type="PackedScene" uid="uid://cx550f25rucv8" path="res://scenes/foam.tscn" id="4_telwu"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ks2v0"]
-size = Vector3(2.1660156, 0.087524414, 2.8447266)
+[sub_resource type="BoxShape3D" id="BoxShape3D_c2ln5"]
+size = Vector3(1.9189453, 1.1104736, 0.1015625)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_dijgj"]
-size = Vector3(2.1123047, 1.5640869, 0.14428711)
+[sub_resource type="BoxShape3D" id="BoxShape3D_brpd5"]
+size = Vector3(1.9765625, 1.1394272, 0.10205078)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_faous"]
-size = Vector3(0.15209961, 1.5640869, 2.8200684)
+[sub_resource type="BoxShape3D" id="BoxShape3D_telwu"]
+size = Vector3(0.12878418, 0.96876526, 2.8515625)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ry43h"]
+size = Vector3(0.12561035, 0.98654175, 2.8173828)
 
 [sub_resource type="Curve3D" id="Curve3D_c2ln5"]
 _data = {
@@ -104,22 +107,30 @@ nodes/no_tape/node = SubResource("AnimationNodeAnimation_h6rpn")
 nodes/no_tape/position = Vector2(500, 300)
 node_connections = [&"output", 0, &"tape", &"flap_l", 0, &"base", &"flap_l", 1, &"a_flap_l", &"flap_b", 0, &"flap_f", &"flap_b", 1, &"a_flap_b", &"flap_f", 0, &"flap_r", &"flap_f", 1, &"a_flap_f", &"flap_r", 0, &"flap_l", &"flap_r", 1, &"a_flap_r", &"tape_seek", 0, &"Animation", &"tape", 0, &"flap_b", &"tape", 1, &"tape_disable", &"tape_scale", 0, &"tape_seek", &"tape_disable", 0, &"tape_scale", &"tape_disable", 1, &"no_tape"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_c2ln5"]
-size = Vector3(1.9189453, 1.1104736, 0.1015625)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_brpd5"]
-size = Vector3(1.9765625, 1.1394272, 0.10205078)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_telwu"]
-size = Vector3(0.12878418, 0.96876526, 2.8515625)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ry43h"]
-size = Vector3(0.12561035, 0.98654175, 2.8173828)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_wavyb"]
-size = Vector3(1.7900391, 1, 2.5390625)
+size = Vector3(1.3395996, 1, 2.168213)
 
-[node name="box" unique_id=1009196777 node_paths=PackedStringArray("animation_player", "content_parent", "unlock_path", "animation_tree", "flap_l_area", "flap_r_area", "flap_f_area", "flap_b_area", "foam_spawner") instance=ExtResource("1_3inec")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ks2v0"]
+size = Vector3(4.1728516, 0.785553, 4.2285156)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dijgj"]
+size = Vector3(2.1123047, 1.5640869, 0.98602295)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_faous"]
+size = Vector3(1.0741577, 1.5640869, 4.5060425)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_igdtg"]
+size = Vector3(2.078125, 1.635376, 2.8554688)
+
+[node name="box" unique_id=1449007014 node_paths=PackedStringArray("animation_player", "content_parent", "unlock_path", "animation_tree", "flap_l_area", "flap_r_area", "flap_f_area", "flap_b_area", "clickable_collider", "foam_spawner") instance=ExtResource("1_3inec")]
+collision_layer = 2
+collision_mask = 0
+axis_lock_linear_x = true
+axis_lock_linear_y = true
+axis_lock_linear_z = true
+gravity_scale = 0.0
+center_of_mass_mode = 1
+angular_damp = 6.0
 script = ExtResource("2_ks2v0")
 animation_player = NodePath("AnimationPlayer")
 content_parent = NodePath("content_parent")
@@ -130,39 +141,14 @@ flap_open_time = 2.0
 flap_close_time = 0.7
 viewing_base_rotation = Vector3(-0.3493217, -2.2551017, -0.3959507)
 viewing_base_scale = Vector3(0.7, 0.7, 0.7)
-flap_l_area = NodePath("flap_l_attachment/flap_l_area")
-flap_r_area = NodePath("flap_r_attachment/flap_r_area")
-flap_f_area = NodePath("flap_f_attachment/flap_f_area")
-flap_b_area = NodePath("flap_b_attachment/flap_b_area")
+flap_l_area = NodePath("box/Skeleton3D/physical_skeleton/flap_l")
+flap_r_area = NodePath("box/Skeleton3D/physical_skeleton/flap_r")
+flap_f_area = NodePath("box/Skeleton3D/physical_skeleton/flap_f")
+flap_b_area = NodePath("box/Skeleton3D/physical_skeleton/flap_b")
+clickable_collider = NodePath("clickable_zone/clickable_collider")
 foam_spawner = NodePath("foam_spawner")
 
-[node name="box_sides_area" type="StaticBody3D" parent="." index="0" unique_id=2039016053]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.022211075, 0, 0)
-collision_layer = 2
-collision_mask = 4
-input_ray_pickable = false
-
-[node name="box_floor" type="CollisionShape3D" parent="box_sides_area" index="0" unique_id=80903983]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.71243584, -0.012900591)
-shape = SubResource("BoxShape3D_ks2v0")
-
-[node name="box_side_l" type="CollisionShape3D" parent="box_sides_area" index="1" unique_id=1584899899]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.030418634, 0.03387451, -1.3735428)
-shape = SubResource("BoxShape3D_dijgj")
-
-[node name="box_side_r" type="CollisionShape3D" parent="box_sides_area" index="2" unique_id=689589687]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.030418634, 0.03387451, 1.3381047)
-shape = SubResource("BoxShape3D_dijgj")
-
-[node name="box_side_f" type="CollisionShape3D" parent="box_sides_area" index="3" unique_id=47873357]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0143056, 0.027650356, 0)
-shape = SubResource("BoxShape3D_faous")
-
-[node name="box_side_b" type="CollisionShape3D" parent="box_sides_area" index="4" unique_id=2092443448]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9443761, 0.027650356, 0)
-shape = SubResource("BoxShape3D_faous")
-
-[node name="Skeleton3D" parent="box" parent_id_path=PackedInt32Array(1852968673) index="0" unique_id=577330285]
+[node name="Skeleton3D" parent="box" parent_id_path=PackedInt32Array(1805710485) index="0" unique_id=1890302394]
 bones/1/rotation = Quaternion(-0.46174875, -8.010531e-15, -1.10089466e-07, 0.88701075)
 bones/2/rotation = Quaternion(0.46174893, 1.2015798e-13, 1.1008948e-07, 0.8870107)
 bones/3/rotation = Quaternion(-8.474184e-08, 8.03924e-08, 0.46174875, 0.88701075)
@@ -182,16 +168,66 @@ bones/14/scale = Vector3(0, 0, 0)
 bones/15/scale = Vector3(0, 0, 0)
 bones/16/scale = Vector3(0, 0, 0)
 
-[node name="content_parent" type="Marker3D" parent="." index="3" unique_id=846267319]
+[node name="physical_skeleton" type="PhysicalBoneSimulator3D" parent="box/Skeleton3D" index="2" unique_id=707263489]
+
+[node name="flap_l" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="0" unique_id=2057939551]
+transform = Transform3D(1, -2.842171e-14, 2.3841855e-07, -1.9530106e-07, 0.57357615, 0.81915236, -1.3675118e-07, -0.81915236, 0.57357615, 2.842171e-14, 0.7282367, -1.3276107)
+collision_layer = 2
+collision_mask = 0
+body_offset = Transform3D(1, -4.973799e-14, -2.842171e-14, 7.1054274e-15, 1.0000001, 0, -7.1054274e-15, 0, 1.0000001, 0, 0, 0)
+gravity_scale = 0.0
+bone_name = "flap.l"
+
+[node name="flap_l_collider" type="CollisionShape3D" parent="box/Skeleton3D/physical_skeleton/flap_l" index="0" unique_id=629874407]
+transform = Transform3D(1, 4.973799e-14, -1.0942358e-12, -7.1054274e-15, 0.9999999, 0, 1.4210855e-14, 0, 0.9999999, -1.563194e-13, 0.45391822, -0.038086474)
+shape = SubResource("BoxShape3D_c2ln5")
+
+[node name="flap_r" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="1" unique_id=52395094]
+transform = Transform3D(1, 2.2026826e-13, 2.3841079e-07, 1.9529465e-07, 0.5735759, -0.8191525, -1.3674685e-07, 0.8191525, 0.5735759, -2.842171e-14, 0.72823656, 1.3276107)
+collision_layer = 2
+collision_mask = 0
+body_offset = Transform3D(1, 5.684342e-14, -7.958079e-12, -3.5527137e-14, 1.0000001, 2.9802322e-08, 7.9865e-12, -2.9802322e-08, 1.0000001, 0, 0, 0)
+gravity_scale = 0.0
+bone_name = "flap.r"
+
+[node name="flap_r_collider" type="CollisionShape3D" parent="box/Skeleton3D/physical_skeleton/flap_r" index="0" unique_id=1460910531]
+transform = Transform3D(1, -6.3948846e-14, -1.8758328e-12, 7.1054274e-15, 0.9999999, -2.9802322e-08, -7.6028073e-13, 2.9802322e-08, 0.9999999, -1.7053026e-13, 0.4679147, 0.03784156)
+shape = SubResource("BoxShape3D_brpd5")
+
+[node name="flap_f" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="2" unique_id=680950752]
+transform = Transform3D(0.57357657, -0.81915194, 2.9618388e-07, 0.81915194, 0.5735766, 2.7688972e-07, -3.9669888e-07, 8.380214e-08, 1, -0.925918, 0.7946934, -4.7367422e-08)
+collision_layer = 2
+collision_mask = 0
+body_offset = Transform3D(1, 5.6624407e-07, -9.754331e-09, -4.4703486e-07, 1, 1.2192274e-09, 9.754331e-09, -1.2192629e-09, 1, 0, 0, 0)
+gravity_scale = 0.0
+bone_name = "flap.f"
+
+[node name="flap_f_collider" type="CollisionShape3D" parent="box/Skeleton3D/physical_skeleton/flap_f" index="0" unique_id=316365979]
+transform = Transform3D(1, -8.9407e-08, 1.6001422e-11, -3.455531e-14, 1, -9.734435e-13, -1.6001422e-11, 9.521273e-13, 0.99999994, -0.03424096, 0.4278487, 1.961098e-12)
+shape = SubResource("BoxShape3D_telwu")
+
+[node name="flap_b" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="3" unique_id=475548456]
+transform = Transform3D(0.57357657, 0.81915194, -2.8676578e-08, -0.81915194, 0.5735766, -1.0302847e-07, -6.794777e-08, 8.25852e-08, 1, 0.925918, 0.7946934, -4.7367422e-08)
+collision_layer = 2
+collision_mask = 0
+body_offset = Transform3D(1, -5.662441e-07, -2.4362237e-09, 4.4703484e-07, 1, 2.4363018e-09, 2.436252e-09, -2.4362663e-09, 1, 0, 0, 0)
+gravity_scale = 0.0
+bone_name = "flap.b"
+
+[node name="flap_b_collider" type="CollisionShape3D" parent="box/Skeleton3D/physical_skeleton/flap_b" index="0" unique_id=586417050]
+transform = Transform3D(1, 8.940696e-08, 2.643219e-12, -5.9836694e-15, 1, -8.242296e-13, -2.6645353e-12, 7.81597e-13, 0.99999994, 0.033020258, 0.4265293, 1.7053026e-12)
+shape = SubResource("BoxShape3D_ry43h")
+
+[node name="content_parent" type="Marker3D" parent="." index="2" unique_id=846267319]
 transform = Transform3D(-0.3564026, -0.18159623, -7.937824e-09, 0, -1.7484556e-08, 0.4, -0.18159623, 0.3564026, 1.5578852e-08, 0, -0.54047656, 0)
 
-[node name="gameboy" parent="content_parent" index="0" unique_id=1598683642 instance=ExtResource("3_c2ln5")]
+[node name="gameboy" parent="content_parent" index="0" unique_id=600752107 instance=ExtResource("3_c2ln5")]
 
-[node name="unlock_path" type="Path3D" parent="." index="4" unique_id=1863239906]
+[node name="unlock_path" type="Path3D" parent="." index="3" unique_id=1863239906]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.87629116, -1.4025981)
 curve = SubResource("Curve3D_c2ln5")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="5" unique_id=184661804]
+[node name="AnimationTree" type="AnimationTree" parent="." index="4" unique_id=184661804]
 tree_root = SubResource("AnimationNodeBlendTree_ry43h")
 anim_player = NodePath("../AnimationPlayer")
 parameters/flap_l/blend_amount = 1.0
@@ -203,77 +239,38 @@ parameters/tape/add_amount = 1.0
 parameters/tape_scale/scale = 0.0
 parameters/tape_disable/add_amount = 1.0
 
-[node name="flap_l_attachment" type="BoneAttachment3D" parent="." index="6" unique_id=1291339872]
-transform = Transform3D(1, 1.4210855e-14, 2.3841852e-07, -1.9530106e-07, 0.5735761, 0.81915224, -1.3675118e-07, -0.81915224, 0.5735761, 2.842171e-14, 0.7282367, -1.3276107)
-bone_name = "flap.l"
-bone_idx = 1
-use_external_skeleton = true
-external_skeleton = NodePath("../box/Skeleton3D")
-
-[node name="flap_l_area" type="RigidBody3D" parent="flap_l_attachment" index="0" unique_id=737051196]
-collision_layer = 3
-collision_mask = 0
-freeze = true
-freeze_mode = 1
-
-[node name="flap_l_collider" type="CollisionShape3D" parent="flap_l_attachment/flap_l_area" index="0" unique_id=629874407]
-transform = Transform3D(1, -7.1054274e-15, -1.0444978e-12, 7.1054274e-15, 1, -2.9802322e-08, -7.1054274e-15, 2.9802322e-08, 1, -1.7053026e-13, 0.45391822, -0.038086474)
-shape = SubResource("BoxShape3D_c2ln5")
-
-[node name="flap_r_attachment" type="BoneAttachment3D" parent="." index="7" unique_id=835983719]
-transform = Transform3D(1, 1.563194e-13, 2.3841872e-07, 1.953012e-07, 0.57357585, -0.81915236, -1.367514e-07, 0.81915236, 0.57357585, -2.842171e-14, 0.72823656, 1.3276107)
-bone_name = "flap.r"
-bone_idx = 2
-use_external_skeleton = true
-external_skeleton = NodePath("../box/Skeleton3D")
-
-[node name="flap_r_area" type="RigidBody3D" parent="flap_r_attachment" index="0" unique_id=282549519]
-collision_layer = 3
-collision_mask = 0
-freeze = true
-freeze_mode = 1
-
-[node name="flap_r_collider" type="CollisionShape3D" parent="flap_r_attachment/flap_r_area" index="0" unique_id=1460910531]
-transform = Transform3D(1, 0, -9.826806e-12, -2.1316282e-14, 1, 0, 7.2120088e-12, 0, 1, -4.405365e-13, 0.46791482, 0.0378415)
-shape = SubResource("BoxShape3D_brpd5")
-
-[node name="flap_f_attachment" type="BoneAttachment3D" parent="." index="8" unique_id=1453285383]
-transform = Transform3D(0.5735762, -0.81915224, 3.027775e-07, 0.8191522, 0.57357615, 2.8418066e-07, -4.0645318e-07, 8.502162e-08, 0.99999994, -0.925918, 0.7946934, -4.7367422e-08)
-bone_name = "flap.f"
-bone_idx = 3
-use_external_skeleton = true
-external_skeleton = NodePath("../box/Skeleton3D")
-
-[node name="flap_f_area" type="RigidBody3D" parent="flap_f_attachment" index="0" unique_id=949677876]
-collision_layer = 3
-collision_mask = 0
-freeze = true
-freeze_mode = 1
-
-[node name="flap_f_collider" type="CollisionShape3D" parent="flap_f_attachment/flap_f_area" index="0" unique_id=316365979]
-transform = Transform3D(1, 4.4703486e-07, -8.15703e-12, -4.4703486e-07, 1, 2.0250468e-12, 8.157031e-12, -2.0250431e-12, 1, -0.034240723, 0.4278487, -1.1368684e-13)
-shape = SubResource("BoxShape3D_telwu")
-
-[node name="flap_b_attachment" type="BoneAttachment3D" parent="." index="9" unique_id=2135322237]
-transform = Transform3D(0.5735762, 0.81915224, -2.9274915e-08, -0.8191522, 0.57357615, -1.06421524e-07, -7.0384054e-08, 8.5021426e-08, 0.99999994, 0.925918, 0.7946934, -4.7367422e-08)
-bone_name = "flap.b"
-bone_idx = 4
-use_external_skeleton = true
-external_skeleton = NodePath("../box/Skeleton3D")
-
-[node name="flap_b_area" type="RigidBody3D" parent="flap_b_attachment" index="0" unique_id=1584222707]
-collision_layer = 3
-collision_mask = 0
-freeze = true
-freeze_mode = 1
-
-[node name="flap_b_collider" type="CollisionShape3D" parent="flap_b_attachment/flap_b_area" index="0" unique_id=586417050]
-transform = Transform3D(1, -4.4703484e-07, -1.8900454e-12, 4.4703484e-07, 1, 3.794298e-12, 1.8900437e-12, -3.794299e-12, 1, 0.03301996, 0.4265293, -9.947598e-14)
-shape = SubResource("BoxShape3D_ry43h")
-
-[node name="foam_spawner" type="CollisionShape3D" parent="." index="10" unique_id=2129642278]
+[node name="foam_spawner" type="CollisionShape3D" parent="." index="5" unique_id=2129642278]
 shape = SubResource("BoxShape3D_wavyb")
+disabled = true
 script = ExtResource("4_brpd5")
 foam_count = 75
 foam_scene = ExtResource("4_telwu")
 metadata/_custom_type_script = "uid://f6sdgqcgumce"
+
+[node name="box_floor" type="CollisionShape3D" parent="." index="6" unique_id=80903983]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.022211075, -1.0614501, -0.012900591)
+shape = SubResource("BoxShape3D_ks2v0")
+
+[node name="box_side_l" type="CollisionShape3D" parent="." index="7" unique_id=1584899899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00820756, 0.03387451, -1.7944107)
+shape = SubResource("BoxShape3D_dijgj")
+
+[node name="box_side_r" type="CollisionShape3D" parent="." index="8" unique_id=689589687]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00820756, 0.03387451, 1.7591815)
+shape = SubResource("BoxShape3D_dijgj")
+
+[node name="box_side_f" type="CollisionShape3D" parent="." index="9" unique_id=47873357]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4531236, 0.027650356, -0.030853271)
+shape = SubResource("BoxShape3D_faous")
+
+[node name="box_side_b" type="CollisionShape3D" parent="." index="10" unique_id=2092443448]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3691859, 0.027650356, 0)
+shape = SubResource("BoxShape3D_faous")
+
+[node name="clickable_zone" type="Area3D" parent="." index="11" unique_id=341284147]
+collision_mask = 0
+
+[node name="clickable_collider" type="CollisionShape3D" parent="clickable_zone" index="0" unique_id=559606416]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.059387207, 0)
+shape = SubResource("BoxShape3D_igdtg")
+disabled = true

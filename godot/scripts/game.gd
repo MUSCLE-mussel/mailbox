@@ -68,17 +68,17 @@ func _ready() -> void:
 	
 	text.text = "initialiazing"
 	
-	mailbox.visible = false
+	mailbox.set_state(Mailbox.State.DISABLED)
 	box.visible = false
 	call_deferred("late_ready")
 	
 func late_ready():
 	#set_state(GameState.OBJECT)
-	#set_state(GameState.MAILBOX)
-	set_state(GameState.PARCEL)
+	set_state(GameState.MAILBOX)
+	#set_state(GameState.PARCEL)
 	
-	box.set_tape_unlocked()
-	box.set_all_flaps_opened()
+	#box.set_tape_unlocked()
+	#box.set_all_flaps_opened()
 	
 func set_state(state: GameState):
 	if state == current_state: return
@@ -86,10 +86,9 @@ func set_state(state: GameState):
 	# Exit
 	match current_state:
 		GameState.MAILBOX:
-			mailbox.visible = false
-			# Hack prevent hidden mailbox colliders from being hit by raycasts
-			mailbox.closed_collider.disabled = true
-			mailbox.open_collider.disabled = true
+			mailbox.set_state(Mailbox.State.DISABLED)
+			
+			box.clickable_collider.disabled = true
 			box.visible = true
 			if transition_tween != null:
 				transition_tween.kill()
@@ -101,6 +100,7 @@ func set_state(state: GameState):
 			if transition_tween != null:
 				transition_tween.kill()
 				transition_tween = null
+			gameboy.clickable_collider.disabled = true
 			
 		GameState.OBJECT:
 			current_item.on_focus_lost()
@@ -112,7 +112,8 @@ func set_state(state: GameState):
 	# Enter
 	match current_state:
 		GameState.MAILBOX:
-			mailbox.visible = true
+			mailbox.set_state(Mailbox.State.ENABLED)
+			mailbox.can_open = true
 			mailbox.set_closed()
 			
 			mailbox.transform = mailbox_base_transform
@@ -122,6 +123,7 @@ func set_state(state: GameState):
 			gameboy.transform = Transform3D.IDENTITY
 			
 			box.visible = true
+			box.clickable_collider.disabled = false
 			box.reparent(mailbox.content_parent, false)
 			box.transform = Transform3D.IDENTITY
 			box.reset()
@@ -134,6 +136,7 @@ func set_state(state: GameState):
 			# hack until objects are handled generically
 			gameboy.reparent(box.content_parent, false)
 			gameboy.transform = Transform3D.IDENTITY
+			gameboy.clickable_collider.disabled = false
 			
 			box.reparent(world, false)
 			box.transform = viewing_parent.transform * box.get_base_viewing_transform()
@@ -163,7 +166,8 @@ func _process(delta: float) -> void:
 			if transition_tween != null: return
 			
 			if GameInput.has_just_tapped:
-				var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0011) # mailbox + box
+				var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0001)
+				print(area)
 				if area != null: 
 					var hit_box: = Tools.find_parent_by_type(area, "Box") as Box
 					if hit_box != null:
@@ -186,22 +190,12 @@ func _process(delta: float) -> void:
 							.set_delay(0.4)
 							
 						transition_tween.tween_callback(on_transition_over)
+						mailbox.can_open = false
 						return
-						
-					else:
-						var hit_mailbox: = Tools.find_parent_by_type(area, "Mailbox") as Mailbox
-						if hit_mailbox != null:
-							if hit_mailbox.opened:
-								hit_mailbox.close()
-							else:
-								hit_mailbox.open()
 						
 							
 		GameState.PARCEL:
 			if transition_tween != null: return
-			
-			if box.unlocking_touch_index < 0:
-				viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
 			
 			if GameInput.has_just_tapped:
 				if true:
@@ -229,11 +223,17 @@ func _process(delta: float) -> void:
 							
 						transition_tween.tween_callback(on_transition_over)
 						return
-							
+			
+func _physics_process(delta):
+	# Update state
+	match current_state:
+		GameState.PARCEL:
+			if box.unlocking_touch_index < 0:
+				viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
+		
 		GameState.OBJECT:
 			if !current_item.is_consuming_input:
 				viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
-			
 
 func on_notification_button_pressed() -> void:
 	android_plugin.test_notifications()

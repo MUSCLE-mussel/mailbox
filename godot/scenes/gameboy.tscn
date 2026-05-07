@@ -194,7 +194,7 @@ nodes/dpad_right/position = Vector2(1740, 520)
 "nodes/TimeScale 7/position" = Vector2(1740, 700)
 node_connections = [&"output", 0, &"Add2 4", &"Blend2", 0, &"Animation", &"Blend2", 1, &"TimeScale", &"power_switch", 0, &"Animation 2", &"TimeScale", 0, &"power_switch", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"TimeScale 2", &"Blend2 3", 0, &"Blend2 2", &"Blend2 3", 1, &"TimeScale 3", &"a", 0, &"Animation 3", &"TimeScale 2", 0, &"a", &"b", 0, &"Animation 4", &"TimeScale 3", 0, &"b", &"Add2", 0, &"Blend2 3", &"Add2", 1, &"TimeScale 4", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"TimeScale 5", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"TimeScale 6", &"Add2 4", 0, &"Add2 3", &"Add2 4", 1, &"TimeScale 7", &"dpad_up", 0, &"Animation 5", &"TimeScale 4", 0, &"dpad_up", &"dpad_down", 0, &"Animation 6", &"TimeScale 5", 0, &"dpad_down", &"dpad_left", 0, &"Animation 7", &"TimeScale 6", 0, &"dpad_left", &"dpad_right", 0, &"Animation 8", &"TimeScale 7", 0, &"dpad_right"]
 
-[node name="gameboy" unique_id=600752107 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree") instance=ExtResource("1_l7tuu")]
+[node name="gameboy" unique_id=600752107 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "clickable_collider") instance=ExtResource("1_l7tuu")]
 script = ExtResource("2_bl50p")
 dpad_left_area = NodePath("dpad_left_area")
 dpad_right_area = NodePath("dpad_right_area")
@@ -205,19 +205,20 @@ b_area = NodePath("b_area")
 power_switch_area = NodePath("power_switch_area")
 animation_tree = NodePath("AnimationTree")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
+clickable_collider = NodePath("clickable_area/clickable_collider")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(526405834) index="0" unique_id=1122612707]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1814418613) index="0" unique_id=1735295671]
 bones/2/rotation = Quaternion(0.7071068, -1.8647015e-07, -2.643272e-08, 0.7071068)
 
-[node name="item_area" type="Area3D" parent="." index="1" unique_id=1759315604]
-collision_layer = 4
+[node name="clickable_area" type="Area3D" parent="." index="1" unique_id=1759315604]
+collision_mask = 0
 
-[node name="collider" type="CollisionShape3D" parent="item_area" index="0" unique_id=1621944228]
+[node name="clickable_collider" type="CollisionShape3D" parent="clickable_area" index="0" unique_id=1621944228]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22094727, 0)
 shape = SubResource("BoxShape3D_l7tuu")
+disabled = true
 
 [node name="dpad_left_area" type="Area3D" parent="." index="2" unique_id=817833841]
-collision_layer = 8
 collision_mask = 0
 
 [node name="dpad_left_collider" type="CollisionShape3D" parent="dpad_left_area" index="0" unique_id=2090146515]
@@ -225,7 +226,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605414, -0.4117213, 0.2821
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="dpad_right_area" type="Area3D" parent="." index="3" unique_id=1967582123]
-collision_layer = 8
 collision_mask = 0
 
 [node name="dpad_right_collider" type="CollisionShape3D" parent="dpad_right_area" index="0" unique_id=927985838]
@@ -233,7 +233,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29355365, -0.4117213, 0.28
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="dpad_up_area" type="Area3D" parent="." index="4" unique_id=2125640431]
-collision_layer = 8
 collision_mask = 0
 
 [node name="dpad_up_collider" type="CollisionShape3D" parent="dpad_up_area" index="0" unique_id=1262758022]
@@ -241,7 +240,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.2509296, 0.28
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="dpad_down_area" type="Area3D" parent="." index="5" unique_id=1475070427]
-collision_layer = 8
 collision_mask = 0
 
 [node name="dpad_down_collider" type="CollisionShape3D" parent="dpad_down_area" index="0" unique_id=350150029]
@@ -249,7 +247,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.5725131, 0.28
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="b_area" type="Area3D" parent="." index="6" unique_id=723674048]
-collision_layer = 8
 collision_mask = 0
 
 [node name="b_collider" type="CollisionShape3D" parent="b_area" index="0" unique_id=1239088858]
@@ -257,7 +254,6 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.27
 shape = SubResource("CylinderShape3D_bl50p")
 
 [node name="a_area" type="Area3D" parent="." index="7" unique_id=469782139]
-collision_layer = 8
 collision_mask = 0
 
 [node name="a_collider" type="CollisionShape3D" parent="a_area" index="0" unique_id=18843300]
@@ -265,7 +261,6 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.63
 shape = SubResource("CylinderShape3D_bl50p")
 
 [node name="power_switch_area" type="Area3D" parent="." index="8" unique_id=1535921541]
-collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="power_switch_area" index="0" unique_id=913691901]

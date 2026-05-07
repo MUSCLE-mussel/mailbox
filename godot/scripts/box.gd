@@ -18,6 +18,8 @@ class_name Box
 @export var flap_f_area: CollisionObject3D
 @export var flap_b_area: CollisionObject3D
 
+@export var clickable_collider: CollisionShape3D
+
 @export var foam_spawner: FoamSpawner
 
 var can_unlock: bool = false
@@ -75,7 +77,6 @@ func _process(dt: float):
 	if is_unlocked:
 		if GameInput.has_just_tapped:
 			var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0111)
-			print(area)
 			
 			match area:
 				flap_l_area:
@@ -91,7 +92,6 @@ func _process(dt: float):
 						close_flap(flap_r)
 						
 				flap_f_area:
-					print("agga")
 					if !flap_f.open:
 						open_flap(flap_f)
 					else:

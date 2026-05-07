@@ -3,6 +3,7 @@ class_name Item
 
 @export var viewing_base_rotation: Vector3
 @export var viewing_base_scale: Vector3 = Vector3.ONE
+@export var clickable_collider: CollisionShape3D
 
 var is_consuming_input: bool
 
