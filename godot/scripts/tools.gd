@@ -107,3 +107,15 @@ func time_independent_lerp_vec3(base: Vector3, target: Vector3, time_to_90: floa
 		time_independent_lerp(base.y, target.y, time_to_90, dt),
 		time_independent_lerp(base.z, target.z, time_to_90, dt)
 	)
+
+func draw_collision_shape_3d(collision_shape: CollisionShape3D, color: Color = Color.RED):
+	if collision_shape.shape == null: return
+	
+	var position: = collision_shape.global_position
+	var rotation: = collision_shape.global_basis.get_rotation_quaternion()
+	var scale: = collision_shape.global_basis.get_scale()
+	
+	if collision_shape.shape is BoxShape3D:
+		var box: = collision_shape.shape as BoxShape3D
+		DebugDraw3D.draw_box(position, rotation, box.size * scale, color, true)
+		

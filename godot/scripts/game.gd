@@ -125,6 +125,7 @@ func set_state(state: GameState):
 			# hack until objects are handled generically
 			gameboy.reparent(box.content_parent, false)
 			gameboy.transform = Transform3D.IDENTITY
+			gameboy.freeze = true
 			
 			box.visible = true
 			box.clickable_collider.disabled = false
@@ -141,6 +142,7 @@ func set_state(state: GameState):
 			gameboy.reparent(box.content_parent, false)
 			gameboy.transform = Transform3D.IDENTITY
 			gameboy.clickable_collider.disabled = false
+			gameboy.freeze = true
 			
 			box.reparent(world, false)
 			box.transform = viewing_parent.transform * box.get_base_viewing_transform()
@@ -206,6 +208,10 @@ func _process(delta: float) -> void:
 							
 		GameState.PARCEL:
 			if transition_tween != null: return
+			
+			if box.is_any_flap_opened() && gameboy.get_parent_node_3d() != Globals.game.world:
+				gameboy.freeze = false
+				gameboy.reparent(Globals.game.world)
 			
 			if GameInput.has_just_tapped:
 				if true:

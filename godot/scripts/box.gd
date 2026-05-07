@@ -62,10 +62,21 @@ func _ready():
 	
 	reset()
 	
+# HACK: scale is not applied to PhysicalBones, so we have to do it manually
+func _physics_process(dt: float):
+	flap_l_area.get_child(0).scale = global_basis.get_scale()
+	flap_r_area.get_child(0).scale = global_basis.get_scale()
+	flap_f_area.get_child(0).scale = global_basis.get_scale()
+	flap_b_area.get_child(0).scale = global_basis.get_scale()
 
 func _process(dt: float):
 	
 	update_tape_interaction()
+	
+	#Tools.draw_collision_shape_3d(flap_l_area.get_child(0) as CollisionShape3D)
+	#Tools.draw_collision_shape_3d(flap_r_area.get_child(0) as CollisionShape3D)
+	#Tools.draw_collision_shape_3d(flap_f_area.get_child(0) as CollisionShape3D)
+	#Tools.draw_collision_shape_3d(flap_b_area.get_child(0) as CollisionShape3D)
 			
 	# update tape visual
 	var target: = target_unlock_ratio
@@ -223,6 +234,9 @@ func set_all_flaps_opened():
 	
 func are_all_flaps_opened():
 	return flap_l.open && flap_r.open && flap_f.open && flap_b.open
+	
+func is_any_flap_opened():
+	return flap_l.open || flap_r.open || flap_f.open || flap_b.open
 	
 func set_tape_unlocked():
 	is_unlocked = true
