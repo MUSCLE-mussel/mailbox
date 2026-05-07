@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bfrbqshe04uuu"
+uid="uid://b100hjrkso40a"
 path="res://.godot/imported/mailbox.glb-98ba4445403791f9b416b672f10b4bde.scn"
 
 [deps]
@@ -34,9 +34,17 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-materials/extract=0
+materials/extract=1
 materials/extract_format=0
-materials/extract_path=""
-_subresources={}
+materials/extract_path="res://meshes/mailbox"
+_subresources={
+"materials": {
+"mat": {
+"use_external/enabled": true,
+"use_external/fallback_path": "res://meshes/mailbox/mat.tres",
+"use_external/path": "uid://bgdt5klm83hig"
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1

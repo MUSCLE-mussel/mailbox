@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://mqjnougknf02"]
+
+[ext_resource type="Texture2D" uid="uid://chsqvuplplgr0" path="res://textures/industrial-skies-1x.png" id="1_733ds"]
+
+[resource]
+resource_name = "Material.001"
+cull_mode = 2
+albedo_color = Color(0.9063318, 0.9063318, 0.9063318, 1)
+albedo_texture = ExtResource("1_733ds")
+roughness = 0.5

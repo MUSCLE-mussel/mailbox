@@ -2,25 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8xelckonfsw"
-path.s3tc="res://.godot/imported/foam_industrial-skies-1x.png-5093bf9568150478925ab565478f8c3f.s3tc.ctex"
-path.etc2="res://.godot/imported/foam_industrial-skies-1x.png-5093bf9568150478925ab565478f8c3f.etc2.ctex"
+uid="uid://chsqvuplplgr0"
+path="res://.godot/imported/industrial-skies-1x.png-c9942925ae3391cbe09163fcd978d471.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
-}
-generator_parameters={
-"md5": "34d58da3beeb006da66d1fa710d65573"
+"vram_texture": false
 }
 
 [deps]
 
-source_file="res://meshes/foam/foam_industrial-skies-1x.png"
-dest_files=["res://.godot/imported/foam_industrial-skies-1x.png-5093bf9568150478925ab565478f8c3f.s3tc.ctex", "res://.godot/imported/foam_industrial-skies-1x.png-5093bf9568150478925ab565478f8c3f.etc2.ctex"]
+source_file="res://textures/industrial-skies-1x.png"
+dest_files=["res://.godot/imported/industrial-skies-1x.png-c9942925ae3391cbe09163fcd978d471.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
