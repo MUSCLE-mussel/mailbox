@@ -7,11 +7,11 @@
 size = Vector3(2.170166, 2.6782227, 0.87109375)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bl50p"]
-size = Vector3(0.17382813, 0.16601563, 0.16308594)
+size = Vector3(0.25610352, 0.24584961, 0.16308594)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_bl50p"]
 height = 0.103515625
-radius = 0.15722656
+radius = 0.20410156
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8noqh"]
 size = Vector3(0.37304688, 0.14038086, 0.24511719)
@@ -197,7 +197,7 @@ node_connections = [&"output", 0, &"Add2 4", &"Blend2", 0, &"Animation", &"Blend
 [sub_resource type="BoxShape3D" id="BoxShape3D_ldcwh"]
 size = Vector3(2.038086, 2.5610352, 0.59820557)
 
-[node name="gameboy" unique_id=564686915 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "clickable_collider") instance=ExtResource("1_l7tuu")]
+[node name="gameboy" unique_id=640936949 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "clickable_collider") instance=ExtResource("1_l7tuu")]
 collision_layer = 4
 collision_mask = 14
 angular_damp = 6.0
@@ -213,7 +213,7 @@ animation_tree = NodePath("AnimationTree")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
 clickable_collider = NodePath("clickable_area/clickable_collider")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(524660111) index="0" unique_id=1152163554]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1632788229) index="0" unique_id=737686583]
 bones/2/rotation = Quaternion(0.7071068, -1.8647015e-07, -2.643272e-08, 0.7071068)
 
 [node name="clickable_area" type="Area3D" parent="." index="1" unique_id=1759315604]
@@ -228,42 +228,42 @@ disabled = true
 collision_mask = 0
 
 [node name="dpad_left_collider" type="CollisionShape3D" parent="dpad_left_area" index="0" unique_id=2090146515]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.605414, -0.4117213, 0.28210306)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6848154, -0.4117213, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="dpad_right_area" type="Area3D" parent="." index="3" unique_id=1967582123]
 collision_mask = 0
 
 [node name="dpad_right_collider" type="CollisionShape3D" parent="dpad_right_area" index="0" unique_id=927985838]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29355365, -0.4117213, 0.28210306)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2158063, -0.4117213, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="dpad_up_area" type="Area3D" parent="." index="4" unique_id=2125640431]
 collision_mask = 0
 
 [node name="dpad_up_collider" type="CollisionShape3D" parent="dpad_up_area" index="0" unique_id=1262758022]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.2509296, 0.28210306)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.17318234, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="dpad_down_area" type="Area3D" parent="." index="5" unique_id=1475070427]
 collision_mask = 0
 
 [node name="dpad_down_collider" type="CollisionShape3D" parent="dpad_down_area" index="0" unique_id=350150029]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.5725131, 0.28210306)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.6519145, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
 [node name="b_area" type="Area3D" parent="." index="6" unique_id=723674048]
 collision_mask = 0
 
 [node name="b_collider" type="CollisionShape3D" parent="b_area" index="0" unique_id=1239088858]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.27365053, -0.4643267, 0.31004918)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.24552917, -0.4709435, 0.32100028)
 shape = SubResource("CylinderShape3D_bl50p")
 
 [node name="a_area" type="Area3D" parent="." index="7" unique_id=469782139]
 collision_mask = 0
 
 [node name="a_collider" type="CollisionShape3D" parent="a_area" index="0" unique_id=18843300]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.63370776, -0.2966665, 0.31004918)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.65686655, -0.22222765, 0.32186484)
 shape = SubResource("CylinderShape3D_bl50p")
 
 [node name="power_switch_area" type="Area3D" parent="." index="8" unique_id=1535921541]
