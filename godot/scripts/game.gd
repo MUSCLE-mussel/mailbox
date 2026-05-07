@@ -103,6 +103,10 @@ func set_state(state: GameState):
 			gameboy.clickable_collider.disabled = true
 			
 		GameState.OBJECT:
+			current_item.axis_lock_linear_x = false
+			current_item.axis_lock_linear_y = false
+			current_item.axis_lock_linear_z = false
+			current_item.collision_mask = 0b0000_01110
 			current_item.on_focus_lost()
 			current_item = null
 			viewer.target = null
@@ -153,6 +157,12 @@ func set_state(state: GameState):
 			
 			current_item.reparent(world, false)
 			current_item.transform = viewing_parent.transform * current_item.get_base_viewing_transform()
+			current_item.axis_lock_linear_x = true
+			current_item.axis_lock_linear_y = true
+			current_item.axis_lock_linear_z = true
+			current_item.collision_mask = 0
+			current_item.axis_lock_linear_z = true
+			#current_item.angular_velocity = Vector3.ZERO
 			
 			viewer.target = current_item
 			

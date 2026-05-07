@@ -52,6 +52,7 @@ pointing/emulate_touch_from_mouse=true
 3d_physics/layer_1="interactive"
 3d_physics/layer_2="static"
 3d_physics/layer_3="dynamic"
+3d_physics/layer_4="invisible_walls"
 
 [physics]
 

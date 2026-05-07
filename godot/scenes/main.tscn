@@ -7,6 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://b8ssfw6m4wf0j" path="res://scenes/mailbox.tscn" id="6_o6xl0"]
 [ext_resource type="Script" uid="uid://dmfbvrxq6u5iw" path="res://scripts/object_viewer.gd" id="7_o6xl0"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
+size = Vector3(8.4157715, 1, 8.124756)
+
 [node name="main" type="Node3D" unique_id=7951666]
 
 [node name="scripts" type="Node" parent="." unique_id=537972198]
@@ -43,26 +46,26 @@ viewing_parent = NodePath("../../world/viewing_parent")
 
 [node name="mailbox" parent="world" unique_id=220009672 instance=ExtResource("6_o6xl0")]
 
-[node name="box" parent="world/mailbox/box/content_parent" parent_id_path=PackedInt32Array(220009672, 155672104) index="0" unique_id=642078501 instance=ExtResource("4_tipki")]
+[node name="box" parent="world/mailbox/box/content_parent" parent_id_path=PackedInt32Array(220009672, 155672104) index="0" unique_id=1449007014 instance=ExtResource("4_tipki")]
 transform = Transform3D(1.4802341, 0.5694762, 0.12488067, -0.57653284, 1.379172, 0.5445054, 0.08664912, -0.55188155, 1.4896008, 0, 1.590909, 0)
 visible = false
 
-[node name="flap_l" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(642078501, 707263489) index="0" unique_id=2057939551]
+[node name="flap_l" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(1449007014, 707263489) index="0" unique_id=2057939551]
 transform = Transform3D(1.4285717, -2.5629997e-06, -2.3953617e-06, 3.3080578e-06, 0.81939554, 1.1702168, -7.1525574e-07, -1.1702168, 0.8193955, -2.692761e-07, 0.72823685, -1.327611)
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6689253e-07, -2.503398e-07, 1.04307265e-08)
 body_offset = Transform3D(1.4285717, -2.6226044e-06, -2.7008355e-06, 2.4437904e-06, 1.4285715, -1.2591481e-06, 2.644956e-06, 1.2665987e-06, 1.4285715, -2.3841858e-07, 3.5762787e-07, -1.4901161e-08)
 
-[node name="flap_r" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(642078501, 707263489) index="1" unique_id=52395094]
+[node name="flap_r" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(1449007014, 707263489) index="1" unique_id=52395094]
 transform = Transform3D(1.4285717, -2.5182962e-06, 3.2186508e-06, 3.993511e-06, 0.8193934, -1.1702182, 1.1920929e-07, 1.1702182, 0.8193934, 2.8747131e-08, 0.72823626, 1.3276111)
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1170577e-13, -8.344665e-08, -2.7120106e-07)
 body_offset = Transform3D(1.4285717, -2.4437904e-06, 2.9206276e-06, 2.4288893e-06, 1.4285716, -8.1956387e-07, -2.8014183e-06, 7.748604e-07, 1.4285716, 0, 1.1920929e-07, 3.874302e-07)
 
-[node name="flap_f" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(642078501, 707263489) index="2" unique_id=680950752]
+[node name="flap_f" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(1449007014, 707263489) index="2" unique_id=680950752]
 transform = Transform3D(0.81939477, -1.1702175, -3.5762787e-07, 1.1702173, 0.81939477, -6.2584877e-07, 7.748604e-07, 5.9604645e-08, 1.4285713, -0.9259424, 0.7946957, 1.9811955e-06)
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.469822e-06, -1.4853473e-05, -1.3768769e-06)
 body_offset = Transform3D(1.4285712, 1.4901161e-07, -1.1920929e-06, -2.3841858e-07, 1.4285717, 4.4703484e-08, 1.4901161e-06, -7.4505806e-08, 1.4285715, -1.2099743e-05, 2.1219254e-05, 1.9669533e-06)
 
-[node name="flap_b" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(642078501, 707263489) index="3" unique_id=475548456]
+[node name="flap_b" parent="world/mailbox/box/content_parent/box/box/Skeleton3D/physical_skeleton" parent_id_path=PackedInt32Array(1449007014, 707263489) index="3" unique_id=475548456]
 transform = Transform3D(0.81939673, 1.1702162, 2.9802322e-07, -1.1702161, 0.8193966, -4.4703484e-07, -5.476177e-07, 5.9604645e-08, 1.4285715, 0.92591816, 0.7946937, 2.9143314e-08)
 joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.909246e-08, -1.6689313e-07, -4.1723233e-08)
 body_offset = Transform3D(1.4285715, -2.399087e-06, 4.7311187e-07, 2.503395e-06, 1.4285718, 1.7881393e-07, -4.8056245e-07, -1.1920929e-07, 1.4285716, -1.4156103e-07, 2.3841858e-07, 5.9604645e-08)
@@ -78,9 +81,17 @@ transform = Transform3D(0.90571684, -0.21764983, 0.36373836, 0, 0.8581097, 0.513
 [node name="viewing_parent" type="Node3D" parent="world" unique_id=2008776012]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.6331539, 0)
 
-[node name="gameboy" parent="world/viewing_parent" unique_id=1598683642 instance=ExtResource("5_tefeu")]
+[node name="gameboy" parent="world/viewing_parent" unique_id=600752107 instance=ExtResource("5_tefeu")]
 transform = Transform3D(0.9249253, -0.064677075, 0.37460658, 0.06975647, 0.9975641, 0, -0.37369406, 0.026131233, 0.92718387, 0, 0, 0)
 visible = false
+
+[node name="arena" type="StaticBody3D" parent="world" unique_id=245493957]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.2403364, 0)
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="world/arena" unique_id=1330990927]
+shape = SubResource("BoxShape3D_tefeu")
 
 [node name="ui" type="Control" parent="." unique_id=1108586680]
 layout_mode = 3

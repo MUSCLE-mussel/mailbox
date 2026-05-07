@@ -108,7 +108,7 @@ nodes/no_tape/position = Vector2(500, 300)
 node_connections = [&"output", 0, &"tape", &"flap_l", 0, &"base", &"flap_l", 1, &"a_flap_l", &"flap_b", 0, &"flap_f", &"flap_b", 1, &"a_flap_b", &"flap_f", 0, &"flap_r", &"flap_f", 1, &"a_flap_f", &"flap_r", 0, &"flap_l", &"flap_r", 1, &"a_flap_r", &"tape_seek", 0, &"Animation", &"tape", 0, &"flap_b", &"tape", 1, &"tape_disable", &"tape_scale", 0, &"tape_seek", &"tape_disable", 0, &"tape_scale", &"tape_disable", 1, &"no_tape"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wavyb"]
-size = Vector3(1.3395996, 1, 2.168213)
+size = Vector3(1.3395996, 0.77978516, 2.168213)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ks2v0"]
 size = Vector3(4.1728516, 0.785553, 4.2285156)
@@ -195,10 +195,10 @@ transform = Transform3D(1, -6.3948846e-14, -1.8758328e-12, 7.1054274e-15, 0.9999
 shape = SubResource("BoxShape3D_brpd5")
 
 [node name="flap_f" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="2" unique_id=680950752]
-transform = Transform3D(0.57357657, -0.81915194, 2.9618388e-07, 0.81915194, 0.5735766, 2.7688972e-07, -3.9669888e-07, 8.380214e-08, 1, -0.925918, 0.7946934, -4.7367422e-08)
+transform = Transform3D(0.57357657, -0.81915194, 2.9509746e-07, 0.81915194, 0.5735766, 2.7568836e-07, -3.9509163e-07, 8.3601236e-08, 1, -0.925918, 0.7946934, -4.7367422e-08)
 collision_layer = 2
 collision_mask = 0
-body_offset = Transform3D(1, 5.6624407e-07, -9.754331e-09, -4.4703486e-07, 1, 1.2192274e-09, 9.754331e-09, -1.2192629e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, 5.6624407e-07, -1.1361607e-08, -4.4703486e-07, 1, 1.4201547e-09, 1.1361578e-08, -1.4201689e-09, 1, 0, 0, 0)
 gravity_scale = 0.0
 bone_name = "flap.f"
 
@@ -207,10 +207,10 @@ transform = Transform3D(1, -8.9407e-08, 1.6001422e-11, -3.455531e-14, 1, -9.7344
 shape = SubResource("BoxShape3D_telwu")
 
 [node name="flap_b" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="3" unique_id=475548456]
-transform = Transform3D(0.57357657, 0.81915194, -2.8676578e-08, -0.81915194, 0.5735766, -1.0302847e-07, -6.794777e-08, 8.25852e-08, 1, 0.925918, 0.7946934, -4.7367422e-08)
+transform = Transform3D(0.57357657, 0.81915194, -2.8577903e-08, -0.81915194, 0.5735766, -1.0246886e-07, -6.7545955e-08, 8.218339e-08, 1, 0.925918, 0.7946934, -4.7367422e-08)
 collision_layer = 2
 collision_mask = 0
-body_offset = Transform3D(1, -5.662441e-07, -2.4362237e-09, 4.4703484e-07, 1, 2.4363018e-09, 2.436252e-09, -2.4362663e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, -5.662441e-07, -2.8380285e-09, 4.4703484e-07, 1, 2.8381137e-09, 2.838064e-09, -2.8380782e-09, 1, 0, 0, 0)
 gravity_scale = 0.0
 bone_name = "flap.b"
 
@@ -240,6 +240,7 @@ parameters/tape_scale/scale = 0.0
 parameters/tape_disable/add_amount = 1.0
 
 [node name="foam_spawner" type="CollisionShape3D" parent="." index="5" unique_id=2129642278]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.11010742, 0)
 shape = SubResource("BoxShape3D_wavyb")
 disabled = true
 script = ExtResource("4_brpd5")

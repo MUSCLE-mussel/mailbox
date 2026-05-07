@@ -194,7 +194,13 @@ nodes/dpad_right/position = Vector2(1740, 520)
 "nodes/TimeScale 7/position" = Vector2(1740, 700)
 node_connections = [&"output", 0, &"Add2 4", &"Blend2", 0, &"Animation", &"Blend2", 1, &"TimeScale", &"power_switch", 0, &"Animation 2", &"TimeScale", 0, &"power_switch", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"TimeScale 2", &"Blend2 3", 0, &"Blend2 2", &"Blend2 3", 1, &"TimeScale 3", &"a", 0, &"Animation 3", &"TimeScale 2", 0, &"a", &"b", 0, &"Animation 4", &"TimeScale 3", 0, &"b", &"Add2", 0, &"Blend2 3", &"Add2", 1, &"TimeScale 4", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"TimeScale 5", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"TimeScale 6", &"Add2 4", 0, &"Add2 3", &"Add2 4", 1, &"TimeScale 7", &"dpad_up", 0, &"Animation 5", &"TimeScale 4", 0, &"dpad_up", &"dpad_down", 0, &"Animation 6", &"TimeScale 5", 0, &"dpad_down", &"dpad_left", 0, &"Animation 7", &"TimeScale 6", 0, &"dpad_left", &"dpad_right", 0, &"Animation 8", &"TimeScale 7", 0, &"dpad_right"]
 
-[node name="gameboy" unique_id=600752107 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "clickable_collider") instance=ExtResource("1_l7tuu")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_ldcwh"]
+size = Vector3(2.038086, 2.5610352, 0.59820557)
+
+[node name="gameboy" unique_id=564686915 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "clickable_collider") instance=ExtResource("1_l7tuu")]
+collision_layer = 4
+collision_mask = 14
+angular_damp = 6.0
 script = ExtResource("2_bl50p")
 dpad_left_area = NodePath("dpad_left_area")
 dpad_right_area = NodePath("dpad_right_area")
@@ -207,7 +213,7 @@ animation_tree = NodePath("AnimationTree")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
 clickable_collider = NodePath("clickable_area/clickable_collider")
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1814418613) index="0" unique_id=1735295671]
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(524660111) index="0" unique_id=1152163554]
 bones/2/rotation = Quaternion(0.7071068, -1.8647015e-07, -2.643272e-08, 0.7071068)
 
 [node name="clickable_area" type="Area3D" parent="." index="1" unique_id=1759315604]
@@ -291,3 +297,7 @@ parameters/dpad_left/seek_request = -1.0
 "parameters/TimeScale 6/scale" = 0.0
 parameters/dpad_right/seek_request = -1.0
 "parameters/TimeScale 7/scale" = 0.0
+
+[node name="physics_collider" type="CollisionShape3D" parent="." index="11" unique_id=542960564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23510742, 0.0016784668)
+shape = SubResource("BoxShape3D_ldcwh")
