@@ -3,8 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://8u840w1ntmvs" path="res://meshes/box/box.glb" id="1_3inec"]
 [ext_resource type="Script" uid="uid://7lautb60xx0d" path="res://scripts/box.gd" id="2_ks2v0"]
 [ext_resource type="PackedScene" uid="uid://bj0a6w6yln2jn" path="res://scenes/gameboy.tscn" id="3_c2ln5"]
+[ext_resource type="AudioStream" uid="uid://bus3lgvce5cjd" path="res://sounds/cardboard_flap_sounds.tres" id="3_ry43h"]
 [ext_resource type="Script" uid="uid://f6sdgqcgumce" path="res://scripts/foam_spawner.gd" id="4_brpd5"]
 [ext_resource type="PackedScene" uid="uid://cx550f25rucv8" path="res://scenes/foam.tscn" id="4_telwu"]
+[ext_resource type="AudioStream" uid="uid://brs5gtfegpy7h" path="res://sounds/tape_unpeeling.wav" id="7_dijgj"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_c2ln5"]
 size = Vector3(1.9189453, 1.0238647, 0.1015625)
@@ -122,7 +124,7 @@ size = Vector3(0.21884155, 1.5640869, 2.9384766)
 [sub_resource type="BoxShape3D" id="BoxShape3D_igdtg"]
 size = Vector3(2.078125, 1.635376, 2.8554688)
 
-[node name="box" unique_id=1449007014 node_paths=PackedStringArray("animation_player", "content_parent", "unlock_path", "animation_tree", "flap_l_area", "flap_r_area", "flap_f_area", "flap_b_area", "clickable_collider", "foam_spawner") instance=ExtResource("1_3inec")]
+[node name="box" unique_id=1449007014 node_paths=PackedStringArray("animation_player", "content_parent", "unlock_path", "animation_tree", "flap_l_area", "flap_r_area", "flap_f_area", "flap_b_area", "clickable_collider", "foam_spawner", "tape_audio_player") instance=ExtResource("1_3inec")]
 collision_layer = 2
 collision_mask = 0
 axis_lock_linear_x = true
@@ -147,6 +149,8 @@ flap_f_area = NodePath("box/Skeleton3D/physical_skeleton/flap_f")
 flap_b_area = NodePath("box/Skeleton3D/physical_skeleton/flap_b")
 clickable_collider = NodePath("clickable_zone/clickable_collider")
 foam_spawner = NodePath("foam_spawner")
+flap_sounds = ExtResource("3_ry43h")
+tape_audio_player = NodePath("tape_audio")
 
 [node name="Skeleton3D" parent="box" parent_id_path=PackedInt32Array(1805710485) index="0" unique_id=1890302394]
 bones/1/rotation = Quaternion(-0.46174875, -8.010531e-15, -1.10089466e-07, 0.88701075)
@@ -195,10 +199,10 @@ transform = Transform3D(1, -2.060574e-13, -1.7905677e-12, 7.1054274e-15, 0.99999
 shape = SubResource("BoxShape3D_brpd5")
 
 [node name="flap_f" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="2" unique_id=680950752]
-transform = Transform3D(0.57357657, -0.81915194, 2.9305065e-07, 0.81915194, 0.5735766, 2.7342512e-07, -3.920637e-07, 8.3222744e-08, 1, -0.925918, 0.7946934, -4.7367422e-08)
+transform = Transform3D(0.57357657, -0.81915194, 2.9076094e-07, 0.81915194, 0.5735766, 2.7089328e-07, -3.886764e-07, 8.279933e-08, 1, -0.925918, 0.7946934, -4.7367422e-08)
 collision_layer = 2
 collision_mask = 0
-body_offset = Transform3D(1, 5.6624407e-07, -1.4389514e-08, -4.4703486e-07, 1, 1.7986324e-09, 1.4389514e-08, -1.7986608e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, 5.6624407e-07, -1.7776813e-08, -4.4703486e-07, 1, 2.2220732e-09, 1.7776813e-08, -2.2220732e-09, 1, 0, 0, 0)
 gravity_scale = 0.0
 bone_name = "flap.f"
 
@@ -207,10 +211,10 @@ transform = Transform3D(1, -8.9407e-08, 1.5916157e-11, -3.2638107e-14, 1, -9.734
 shape = SubResource("BoxShape3D_telwu")
 
 [node name="flap_b" type="PhysicalBone3D" parent="box/Skeleton3D/physical_skeleton" index="3" unique_id=475548456]
-transform = Transform3D(0.57357657, 0.81915194, -2.839201e-08, -0.81915194, 0.5735766, -1.0141459e-07, -6.678897e-08, 8.142641e-08, 1, 0.925918, 0.7946934, -4.7367422e-08)
+transform = Transform3D(0.57357657, 0.81915194, -2.8184045e-08, -0.81915194, 0.5735766, -1.00235184e-07, -6.5942146e-08, 8.057958e-08, 1, 0.925918, 0.7946934, -4.7367422e-08)
 collision_layer = 2
 collision_mask = 0
-body_offset = Transform3D(1, -5.662441e-07, -3.5950123e-09, 4.4703484e-07, 1, 3.5950904e-09, 3.5950478e-09, -3.595062e-09, 1, 0, 0, 0)
+body_offset = Transform3D(1, -5.662441e-07, -4.4418442e-09, 4.4703484e-07, 1, 4.4419224e-09, 4.4418726e-09, -4.441887e-09, 1, 0, 0, 0)
 gravity_scale = 0.0
 bone_name = "flap.b"
 
@@ -275,3 +279,8 @@ collision_mask = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.059387207, 0)
 shape = SubResource("BoxShape3D_igdtg")
 disabled = true
+
+[node name="tape_audio" type="AudioStreamPlayer3D" parent="." index="12" unique_id=568733851]
+stream = ExtResource("7_dijgj")
+volume_db = -80.0
+autoplay = true

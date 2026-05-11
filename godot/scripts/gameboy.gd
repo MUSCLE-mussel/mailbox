@@ -8,7 +8,19 @@ extends Item
 @export var b_area: Area3D
 @export var power_switch_area: Area3D
 
+@export var button1_down_sound: AudioStream
+@export var button1_up_sound: AudioStream
+@export var button2_down_sound: AudioStream
+@export var button2_up_sound: AudioStream
+@export var power_on_sound: AudioStream
+@export var power_off_sound: AudioStream
+
 @export var animation_tree: AnimationTree
+@export var gameboy_game: GameboyGame
+
+@export var physics_impact_sound_min_impulse: float
+@export var physics_impact_sound_max_impulse: float
+@export var physics_impact_sound: AudioStream
 
 var buttons_enabled: bool = false
 
@@ -29,6 +41,8 @@ var dpad_left_state: ButtonState
 var dpad_right_state: ButtonState
 
 var buttons: Array[ButtonState]
+
+var previous_game_input: GameboyGame.GameboyInput
 
 const BUTTON_PRESS_DURATION: = 0.07
 const BUTTON_RELEASE_DURATION := 0.27
@@ -55,6 +69,8 @@ func _ready():
 	buttons.append(dpad_down_state)
 	buttons.append(dpad_left_state)
 	buttons.append(dpad_right_state)
+	
+	previous_game_input = GameboyGame.GameboyInput.new()
 
 func on_focus_gained():
 	buttons_enabled = true
@@ -76,7 +92,8 @@ func reset():
 	if power_switch_tween != null:
 		power_switch_tween.kill()
 		power_switch_tween = null
-	pass
+		
+	gameboy_game.set_state(GameboyGame.State.OFF)
 
 func _process(dt: float) -> void:
 	
@@ -89,6 +106,38 @@ func _process(dt: float) -> void:
 	
 	animation_tree.set(&"parameters/power_switch/seek_request", power_switch_ratio)
 	
+	# Update game
+	var game_input: = GameboyGame.GameboyInput.new()
+	game_input.a = a_state.touch_index >= 0
+	game_input.b = b_state.touch_index >= 0
+	game_input.dpad_up = dpad_up_state.touch_index >= 0
+	game_input.dpad_down = dpad_down_state.touch_index >= 0
+	game_input.dpad_left = dpad_left_state.touch_index >= 0
+	game_input.dpad_right = dpad_right_state.touch_index >= 0
+	gameboy_game.update(game_input, dt)
+	
+	# Sound
+	var button_01_down = func(): AudioManager.play_3d_sound(button1_down_sound, global_position)
+	var button_01_up = func(): AudioManager.play_3d_sound(button1_up_sound, global_position)
+	var button_02_down = func(): AudioManager.play_3d_sound(button2_down_sound, global_position)
+	var button_02_up = func(): AudioManager.play_3d_sound(button2_up_sound, global_position)
+	
+	if !previous_game_input.a && game_input.a: button_01_down.call()
+	if !previous_game_input.b && game_input.b: button_01_down.call()
+	if !previous_game_input.dpad_up && game_input.dpad_up: button_02_down.call()
+	if !previous_game_input.dpad_down && game_input.dpad_down: button_02_down.call()
+	if !previous_game_input.dpad_left && game_input.dpad_left: button_02_down.call()
+	if !previous_game_input.dpad_right && game_input.dpad_right: button_02_down.call()
+	
+	if previous_game_input.a && !game_input.a: button_01_up.call()
+	if previous_game_input.b && !game_input.b: button_01_up.call()
+	if previous_game_input.dpad_up && !game_input.dpad_up: button_02_up.call()
+	if previous_game_input.dpad_down && !game_input.dpad_down: button_02_up.call()
+	if previous_game_input.dpad_left && !game_input.dpad_left: button_02_up.call()
+	if previous_game_input.dpad_right && !game_input.dpad_right: button_02_up.call()
+
+	# End frame
+	previous_game_input = game_input
 
 func process_input():
 	
@@ -145,7 +194,8 @@ func turn_power_on():
 	power_switch_tween.tween_property(self, "power_switch_ratio", 1.0, POWER_ON_DURATION)\
 		.set_trans(Tween.TRANS_CUBIC)\
 		.set_ease(Tween.EASE_OUT)
-	
+	power_switch_tween.finished.connect(on_power_on)
+	AudioManager.play_3d_sound(power_on_sound, global_position)
 	power_on = true
 	
 
@@ -158,5 +208,22 @@ func turn_power_off():
 		.set_ease(Tween.EASE_OUT)\
 		.from_current()
 	
+	gameboy_game.set_state(GameboyGame.State.OFF)
+	AudioManager.play_3d_sound(power_off_sound, global_position)
 	power_on = false	
 	
+func on_power_on():
+	gameboy_game.set_state(GameboyGame.State.TITLE)
+	
+func _integrate_forces(state: PhysicsDirectBodyState3D):
+	
+	# Play sound on impact
+	for i in state.get_contact_count():
+		var impulse_length: = state.get_contact_impulse(i).length()
+		var t: = clampf((impulse_length - physics_impact_sound_min_impulse) / (physics_impact_sound_max_impulse - physics_impact_sound_min_impulse), 0.0, 1.0)
+		
+		if t > 0:
+			#print(impulse_length)
+			var contact_position: = global_transform * state.get_contact_local_position(0)
+			var player: = AudioManager.play_3d_sound(physics_impact_sound, contact_position)
+			player.volume_linear = remap(t, 0.0, 1.0, 0.5, 1.0)

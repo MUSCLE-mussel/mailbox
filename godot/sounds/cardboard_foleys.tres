@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://dn8k0emjqbf2l"]
+
+[ext_resource type="AudioStream" uid="uid://d1s182y3f2wfw" path="res://sounds/cardboard_foley_01.wav" id="1_dmwea"]
+[ext_resource type="AudioStream" uid="uid://cbk80r8fvporp" path="res://sounds/cardboard_foley_02.wav" id="2_v7iet"]
+[ext_resource type="AudioStream" uid="uid://dnrb6ihcb2qbm" path="res://sounds/cardboard_foley_03.wav" id="3_n2mpd"]
+[ext_resource type="AudioStream" uid="uid://ft0rdys880wm" path="res://sounds/cardboard_foley_04.wav" id="4_b0ofe"]
+[ext_resource type="AudioStream" uid="uid://c6ykwjex1rjef" path="res://sounds/cardboard_foley_05.wav" id="5_rqwx4"]
+
+[resource]
+random_pitch = 1.0594631
+random_volume_offset_db = 1.0
+streams_count = 5
+stream_0/stream = ExtResource("1_dmwea")
+stream_1/stream = ExtResource("2_v7iet")
+stream_2/stream = ExtResource("3_n2mpd")
+stream_3/stream = ExtResource("4_b0ofe")
+stream_4/stream = ExtResource("5_rqwx4")

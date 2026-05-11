@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://b100hjrkso40a" path="res://meshes/mailbox/mailbox.glb" id="1_3eaje"]
 [ext_resource type="Script" uid="uid://yvidg6cdoya1" path="res://scripts/mailbox.gd" id="2_80nar"]
+[ext_resource type="AudioStream" uid="uid://bsyfgvhgmqne0" path="res://sounds/mailbox_open.wav" id="3_xb57f"]
+[ext_resource type="AudioStream" uid="uid://3msatra1ms0d" path="res://sounds/mailbox_close.wav" id="4_p65c8"]
+[ext_resource type="AudioStream" uid="uid://b86fn0u725wo1" path="res://sounds/mailbox_blam.wav" id="5_8jpdh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3eaje"]
 size = Vector3(2.2109375, 2.538086, 1.9338379)
@@ -15,6 +18,9 @@ animation_player = NodePath("AnimationPlayer")
 content_parent = NodePath("box/content_parent")
 closed_collider = NodePath("area/closed_collider")
 opened_collider = NodePath("area/opened_collider")
+open_sound = ExtResource("3_xb57f")
+close_sound = ExtResource("4_p65c8")
+closed_sound = ExtResource("5_8jpdh")
 
 [node name="area" type="Area3D" parent="." index="0" unique_id=829349597]
 collision_mask = 0

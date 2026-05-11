@@ -7,7 +7,13 @@ class_name ObjectViewer
 @export var physics_drag_speed: Vector2 = Vector2(1,1);
 @export var drag_smooth_time: float = 0.05;
 @export var sample_count: int = 10;
-@export var max_input = 3.0
+@export var max_input: float = 3.0
+@export var foley_input_threshold: float = 1.0
+
+@export var foley_sounds: AudioStream
+
+var play_sounds: bool = false
+var current_foley: AudioStreamPlayer3D
 
 class InputSample:
 	var input: Vector2
@@ -16,10 +22,14 @@ class InputSample:
 var samples: Array[InputSample]
 
 var smoothed_drag_input: Vector2
+var previous_smoothed_drag_input: Vector2
+var previous_is_dragging: bool
 
 func update(delta: float, is_dragging: bool, input: Vector2):
 	if target == null: return
 	if camera == null: return
+	
+	previous_smoothed_drag_input = smoothed_drag_input
 	
 	if is_dragging:
 		
@@ -47,6 +57,7 @@ func update(delta: float, is_dragging: bool, input: Vector2):
 	else:
 		samples.clear()
 		smoothed_drag_input = Tools.time_independent_lerp_vec2(smoothed_drag_input, Vector2.ZERO, drag_smooth_time, delta)
+		
 	
 	#print("%.2f, %s %v"%[delta, is_dragging, input])
 	
@@ -63,6 +74,19 @@ func update(delta: float, is_dragging: bool, input: Vector2):
 		#print(torque)
 		target_rigidbody.apply_torque(torque)
 		#target_rigidbody.angular_velocity = clamp(target_rigidbody.angular_velocity, Vector3(-max_angular_velocity, -max_angular_velocity, -max_angular_velocity), Vector3(max_angular_velocity, max_angular_velocity, max_angular_velocity))
+		
+	# Sound
+	if play_sounds:
+		var should_play_foley: = false
+		should_play_foley = should_play_foley || (smoothed_drag_input.length() >= foley_input_threshold && current_foley == null)
+		if should_play_foley:
+			current_foley = AudioManager.play_3d_sound(foley_sounds, target.global_position)
+		if current_foley != null:
+			var t: float = (smoothed_drag_input.length() - foley_input_threshold) / (max_input - foley_input_threshold)
+			#print(t)
+			current_foley.volume_linear = max(current_foley.volume_linear, clampf(t, 0.1, 1.0))
+	
+	previous_is_dragging = is_dragging
 
 func reset():
 	smoothed_drag_input = Vector2.ZERO

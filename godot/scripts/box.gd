@@ -22,6 +22,9 @@ class_name Box
 
 @export var foam_spawner: FoamSpawner
 
+@export var flap_sounds: AudioStream
+@export var tape_audio_player: AudioStreamPlayer3D
+
 var can_unlock: bool = false
 var is_unlocked: bool = false
 
@@ -36,6 +39,7 @@ class FlapData:
 	var open: bool
 	var tween: Tween
 	var property: String
+	var sound: AudioStreamPlayer3D
 
 var flap_l: FlapData
 var flap_r: FlapData
@@ -82,8 +86,14 @@ func _process(dt: float):
 	var target: = target_unlock_ratio
 	if unlocking_touch_index >= 0:
 		target = max(target, 0.05)
+	var previous_unlock_ratio = current_unlock_ratio
 	current_unlock_ratio = Tools.time_independent_lerp(current_unlock_ratio, target, tape_smooth_time, dt)
 	animation_tree.set(&"parameters/tape_seek/seek_request", tape_open_animation_length * current_unlock_ratio)
+	
+	# Audio
+	var unlock_speed = abs(current_unlock_ratio - previous_unlock_ratio) / dt
+	tape_audio_player.volume_linear = clamp(remap(unlock_speed, 0.3, 3.0, 0.0, 1.0), 0.0, 1.0)
+	#tape_audio_player.pitch_scale = remap(current_unlock_ratio, 0.0, 1.0, 0.9, 1.2)
 	
 	if is_unlocked:
 		if GameInput.has_just_tapped:
@@ -202,6 +212,8 @@ func reset_flap(flap: FlapData):
 	if flap.tween != null:
 		flap.tween.kill()
 		flap.tween = null
+	if flap.sound != null:
+		flap.sound.queue_free()
 	animation_tree.set(flap.property, 0.0)
 		
 func open_flap(flap: FlapData):
@@ -210,6 +222,9 @@ func open_flap(flap: FlapData):
 	flap.tween.tween_property(animation_tree, flap.property, 1.0, flap_open_time)\
 		.set_trans(Tween.TRANS_ELASTIC)\
 		.set_ease(Tween.EASE_OUT)
+	if flap.sound != null:
+		flap.sound.queue_free()
+	flap.sound = AudioManager.play_3d_sound(flap_sounds, global_position)
 	flap.open = true
 	
 func close_flap(flap: FlapData):
@@ -218,11 +233,16 @@ func close_flap(flap: FlapData):
 	flap.tween.tween_property(animation_tree, flap.property, 0.0, flap_close_time)\
 		.set_trans(Tween.TRANS_BACK)\
 		.set_ease(Tween.EASE_OUT)
+	if flap.sound != null:
+		flap.sound.queue_free()
+	flap.sound = AudioManager.play_3d_sound(flap_sounds, global_position)
 	flap.open = false
 	
 func set_flap_opened(flap: FlapData):
 	if flap.tween != null: flap.tween.kill()
 	flap.tween = null
+	if flap.sound != null:
+		flap.sound.queue_free()
 	animation_tree.set(flap.property, 1.0)
 	flap.open = true
 	

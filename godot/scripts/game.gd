@@ -18,6 +18,8 @@ class_name Game
 @export var viewer: ObjectViewer
 @export var viewing_parent: Node3D
 
+@export var parcel_draw_sound: AudioStream
+
 # Game state
 enum GameState
 {
@@ -74,8 +76,8 @@ func _ready() -> void:
 	
 func late_ready():
 	#set_state(GameState.OBJECT)
-	set_state(GameState.MAILBOX)
-	#set_state(GameState.PARCEL)
+	#set_state(GameState.MAILBOX)
+	set_state(GameState.PARCEL)
 	
 	#box.set_tape_unlocked()
 	#box.set_all_flaps_opened()
@@ -97,6 +99,7 @@ func set_state(state: GameState):
 		GameState.PARCEL:
 			box.visible = false
 			viewer.target = null
+			viewer.play_sounds = false
 			if transition_tween != null:
 				transition_tween.kill()
 				transition_tween = null
@@ -137,6 +140,7 @@ func set_state(state: GameState):
 			box.visible = true
 			
 			viewer.target = box
+			viewer.play_sounds = true
 			
 			# hack until objects are handled generically
 			gameboy.reparent(box.content_parent, false)
@@ -179,7 +183,6 @@ func _process(delta: float) -> void:
 			
 			if GameInput.has_just_tapped:
 				var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0001)
-				print(area)
 				if area != null: 
 					var hit_box: = Tools.find_parent_by_type(area, "Box") as Box
 					if hit_box != null:
@@ -203,6 +206,9 @@ func _process(delta: float) -> void:
 							
 						transition_tween.tween_callback(on_transition_over)
 						mailbox.can_open = false
+						
+						AudioManager.play_3d_sound(parcel_draw_sound, box.global_position)
+						
 						return
 						
 							
@@ -238,6 +244,9 @@ func _process(delta: float) -> void:
 							.set_delay(0.3)
 							
 						transition_tween.tween_callback(on_transition_over)
+						
+						AudioManager.play_3d_sound(parcel_draw_sound, current_item.global_position)
+						
 						return
 			
 func _physics_process(delta):

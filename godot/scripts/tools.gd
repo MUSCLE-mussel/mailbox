@@ -1,7 +1,6 @@
 extends Node
 class_name _Tools
 
-
 func find_parent_by_type(node: Node, clss_name: String, recursive: bool = true) -> Node:
 	var parent: = node.get_parent()
 	if parent != null:

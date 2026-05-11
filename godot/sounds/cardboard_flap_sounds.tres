@@ -1,0 +1,17 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://bus3lgvce5cjd"]
+
+[ext_resource type="AudioStream" uid="uid://e6d280r40pfe" path="res://sounds/cardboard_flap_01.wav" id="1_5161i"]
+[ext_resource type="AudioStream" uid="uid://be1w3i1s6lj8j" path="res://sounds/cardboard_flap_02.wav" id="2_rra2o"]
+[ext_resource type="AudioStream" uid="uid://t5pi5c2bmvkq" path="res://sounds/cardboard_flap_03.wav" id="3_tjtiq"]
+[ext_resource type="AudioStream" uid="uid://b6aeu3028rw3y" path="res://sounds/cardboard_flap_04.wav" id="4_fltul"]
+[ext_resource type="AudioStream" uid="uid://ddvhb2fu8jt2p" path="res://sounds/cardboard_flap_05.wav" id="5_h2dbr"]
+
+[resource]
+random_pitch = 1.0614846
+random_volume_offset_db = 1.19
+streams_count = 5
+stream_0/stream = ExtResource("1_5161i")
+stream_1/stream = ExtResource("2_rra2o")
+stream_2/stream = ExtResource("3_tjtiq")
+stream_3/stream = ExtResource("4_fltul")
+stream_4/stream = ExtResource("5_h2dbr")

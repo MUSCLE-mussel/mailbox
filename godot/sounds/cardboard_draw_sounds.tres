@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://c5i8wfc7qtkn3"]
+
+[ext_resource type="AudioStream" uid="uid://do78ucimm8x7v" path="res://sounds/cardboard_draw_01.wav" id="1_78k4h"]
+[ext_resource type="AudioStream" uid="uid://b2d83e7lko0i" path="res://sounds/cardboard_draw_02.wav" id="2_tm5u2"]
+
+[resource]
+random_pitch = 1.0553099
+random_volume_offset_db = 1.04
+streams_count = 2
+stream_0/stream = ExtResource("1_78k4h")
+stream_1/stream = ExtResource("2_tm5u2")

@@ -1,0 +1,9 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://cqxidj3ic8wa7"]
+
+[ext_resource type="AudioStream" uid="uid://c6dh0oc4vh8eu" path="res://sounds/gb_power_01_off.wav" id="1_psgdy"]
+
+[resource]
+random_pitch = 1.0594631
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("1_psgdy")

@@ -2,6 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://byofc4xyx62b1" path="res://meshes/gameboy/gameboy.glb" id="1_l7tuu"]
 [ext_resource type="Script" uid="uid://ra67lwaha8b7" path="res://scripts/gameboy.gd" id="2_bl50p"]
+[ext_resource type="PackedScene" uid="uid://b4bppv6bu231" path="res://scenes/gameboy_game.tscn" id="3_8noqh"]
+[ext_resource type="AudioStream" uid="uid://6e5mrma4i2eg" path="res://sounds/gb_button_down.tres" id="3_206pj"]
+[ext_resource type="AudioStream" uid="uid://c6mqd200t31wp" path="res://sounds/nintendo-game-boy-startup.wav" id="4_0coaa"]
+[ext_resource type="AudioStream" uid="uid://ddxhuyc8aynvw" path="res://sounds/gb_button_up.tres" id="4_kfybk"]
+[ext_resource type="Texture2D" uid="uid://bq6koipkr74p1" path="res://textures/gameboy_game_viewport.tres" id="4_ldcwh"]
+[ext_resource type="AudioStream" uid="uid://2asfoewcnbqs" path="res://sounds/gb_dpad_down.tres" id="5_36mbw"]
+[ext_resource type="AudioStream" uid="uid://b6wgsfsw1wd8t" path="res://sounds/gb_dpad_up.tres" id="6_kx51g"]
+[ext_resource type="AudioStream" uid="uid://85em8im8mijs" path="res://sounds/gb_power_on.tres" id="7_gwron"]
+[ext_resource type="AudioStream" uid="uid://cqxidj3ic8wa7" path="res://sounds/gb_power_off.tres" id="8_ouaj8"]
+[ext_resource type="AudioStream" uid="uid://bxstg4vnx46j5" path="res://sounds/thud_sounds.tres" id="9_kfybk"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_l7tuu"]
 size = Vector3(2.170166, 2.6782227, 0.87109375)
@@ -15,6 +25,9 @@ radius = 0.20410156
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8noqh"]
 size = Vector3(0.37304688, 0.14038086, 0.24511719)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ldcwh"]
+size = Vector3(2.038086, 2.5610352, 0.59820557)
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_bl50p"]
 filter_enabled = true
@@ -132,7 +145,6 @@ filters = ["Armature/Skeleton3D:power_switch"]
 [sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_c3241"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_bl50p"]
-graph_offset = Vector2(739.7556, 15.34433)
 nodes/output/position = Vector2(2180, 120)
 nodes/Animation/node = SubResource("AnimationNodeAnimation_bl50p")
 nodes/Animation/position = Vector2(-560, -20)
@@ -194,12 +206,11 @@ nodes/dpad_right/position = Vector2(1740, 520)
 "nodes/TimeScale 7/position" = Vector2(1740, 700)
 node_connections = [&"output", 0, &"Add2 4", &"Blend2", 0, &"Animation", &"Blend2", 1, &"TimeScale", &"power_switch", 0, &"Animation 2", &"TimeScale", 0, &"power_switch", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"TimeScale 2", &"Blend2 3", 0, &"Blend2 2", &"Blend2 3", 1, &"TimeScale 3", &"a", 0, &"Animation 3", &"TimeScale 2", 0, &"a", &"b", 0, &"Animation 4", &"TimeScale 3", 0, &"b", &"Add2", 0, &"Blend2 3", &"Add2", 1, &"TimeScale 4", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"TimeScale 5", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"TimeScale 6", &"Add2 4", 0, &"Add2 3", &"Add2 4", 1, &"TimeScale 7", &"dpad_up", 0, &"Animation 5", &"TimeScale 4", 0, &"dpad_up", &"dpad_down", 0, &"Animation 6", &"TimeScale 5", 0, &"dpad_down", &"dpad_left", 0, &"Animation 7", &"TimeScale 6", 0, &"dpad_left", &"dpad_right", 0, &"Animation 8", &"TimeScale 7", 0, &"dpad_right"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ldcwh"]
-size = Vector3(2.038086, 2.5610352, 0.59820557)
-
-[node name="gameboy" unique_id=640936949 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "clickable_collider") instance=ExtResource("1_l7tuu")]
+[node name="gameboy" unique_id=640936949 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "gameboy_game", "clickable_collider") instance=ExtResource("1_l7tuu")]
 collision_layer = 4
 collision_mask = 14
+contact_monitor = true
+max_contacts_reported = 1
 angular_damp = 6.0
 script = ExtResource("2_bl50p")
 dpad_left_area = NodePath("dpad_left_area")
@@ -209,7 +220,17 @@ dpad_down_area = NodePath("dpad_down_area")
 a_area = NodePath("a_area")
 b_area = NodePath("b_area")
 power_switch_area = NodePath("power_switch_area")
+button1_down_sound = ExtResource("3_206pj")
+button1_up_sound = ExtResource("4_kfybk")
+button2_down_sound = ExtResource("5_36mbw")
+button2_up_sound = ExtResource("6_kx51g")
+power_on_sound = ExtResource("7_gwron")
+power_off_sound = ExtResource("8_ouaj8")
 animation_tree = NodePath("AnimationTree")
+gameboy_game = NodePath("game/GameboyGame")
+physics_impact_sound_min_impulse = 0.2
+physics_impact_sound_max_impulse = 3.0
+physics_impact_sound = ExtResource("9_kfybk")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
 clickable_collider = NodePath("clickable_area/clickable_collider")
 
@@ -273,7 +294,11 @@ collision_mask = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5712409, 1.4738008, 0)
 shape = SubResource("BoxShape3D_8noqh")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="10" unique_id=1142543275]
+[node name="physics_collider" type="CollisionShape3D" parent="." index="9" unique_id=542960564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23510742, 0.0016784668)
+shape = SubResource("BoxShape3D_ldcwh")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="11" unique_id=1142543275]
 tree_root = SubResource("AnimationNodeBlendTree_bl50p")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Blend2/blend_amount = 1.0
@@ -298,6 +323,15 @@ parameters/dpad_left/seek_request = -1.0
 parameters/dpad_right/seek_request = -1.0
 "parameters/TimeScale 7/scale" = 0.0
 
-[node name="physics_collider" type="CollisionShape3D" parent="." index="11" unique_id=542960564]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23510742, 0.0016784668)
-shape = SubResource("BoxShape3D_ldcwh")
+[node name="game" type="SubViewport" parent="." index="12" unique_id=111498510]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(160, 144)
+
+[node name="GameboyGame" parent="game" index="0" unique_id=502415142 node_paths=PackedStringArray("sound_position") instance=ExtResource("3_8noqh")]
+title_sound = ExtResource("4_0coaa")
+sound_position = NodePath("../../Armature")
+
+[node name="screen" type="Sprite3D" parent="." index="13" unique_id=1020907301]
+transform = Transform3D(0.6502582, 0, 0, 0, 0.6502582, 0, 0, 0, 1, 0, 0.7505083, 0.28760266)
+texture = ExtResource("4_ldcwh")

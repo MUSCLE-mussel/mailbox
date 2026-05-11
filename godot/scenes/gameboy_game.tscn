@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://b4bppv6bu231"]
+
+[ext_resource type="Script" uid="uid://caawrfod2i5al" path="res://scripts/gameboy_game.gd" id="1_k20fy"]
+[ext_resource type="Texture2D" uid="uid://c87kp2jpudpkf" path="res://textures/gameboy_game/title.png" id="2_7u4n7"]
+
+[sub_resource type="Gradient" id="Gradient_3mqt4"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.5921569, 0.6431373, 0.43529412, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k20fy"]
+gradient = SubResource("Gradient_3mqt4")
+width = 160
+height = 144
+
+[sub_resource type="Gradient" id="Gradient_7u4n7"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.7236233, 0.77406347, 0.5758002, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5me4b"]
+gradient = SubResource("Gradient_7u4n7")
+width = 160
+height = 144
+
+[node name="GameboyGame" type="Node2D" unique_id=502415142 node_paths=PackedStringArray("title", "background_off")]
+script = ExtResource("1_k20fy")
+title = NodePath("title")
+background_off = NodePath("background_off")
+
+[node name="camera" type="Camera2D" parent="." unique_id=1768243153]
+anchor_mode = 0
+limit_left = 0
+limit_top = 0
+limit_right = 160
+limit_bottom = 144
+
+[node name="background_on" type="Sprite2D" parent="." unique_id=306204880]
+texture = SubResource("GradientTexture2D_k20fy")
+offset = Vector2(80, 72)
+region_enabled = true
+region_rect = Rect2(0, 0, 160, 144)
+
+[node name="background_off" type="Sprite2D" parent="." unique_id=1381429882]
+texture = SubResource("GradientTexture2D_5me4b")
+offset = Vector2(80, 72)
+region_enabled = true
+region_rect = Rect2(0, 0, 160, 144)
+
+[node name="title" type="Sprite2D" parent="." unique_id=149983593]
+texture_filter = 1
+position = Vector2(80, -15)
+texture = ExtResource("2_7u4n7")

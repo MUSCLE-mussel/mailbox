@@ -1,0 +1,9 @@
+[gd_resource type="AudioStreamRandomizer" format=3 uid="uid://b6wgsfsw1wd8t"]
+
+[ext_resource type="AudioStream" uid="uid://dn7qfhgg6sjo2" path="res://sounds/gb_dpad_01_up.wav" id="1_ug1cb"]
+
+[resource]
+random_pitch = 1.0594631
+random_volume_offset_db = 1.0
+streams_count = 1
+stream_0/stream = ExtResource("1_ug1cb")

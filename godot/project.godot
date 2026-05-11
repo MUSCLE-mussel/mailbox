@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Globals="*uid://35811dq48qkj"
 Tools="*uid://7n2g1i4padsm"
 GameInput="*uid://g83xh0xmdtxo"
+AudioManager="*uid://cwv4tw0uxdrh8"
 
 [debug]
 
