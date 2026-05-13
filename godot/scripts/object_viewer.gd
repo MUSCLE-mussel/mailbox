@@ -32,7 +32,6 @@ func update(delta: float, is_dragging: bool, input: Vector2):
 	previous_smoothed_drag_input = smoothed_drag_input
 	
 	if is_dragging:
-		
 		# we average samples cause zero inputs are inserted before release in the input on some devices and it kills momentum
 		var sample: = InputSample.new()
 		sample.input = input

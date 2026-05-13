@@ -1,50 +1,62 @@
 extends Node3D
 class_name Game
 
-# UI
-@export var notification_button: BaseButton;
-@export var permissions_button: BaseButton;
-@export var app_page_button: BaseButton;
-@export var hello_world_button: BaseButton;
-@export var reset_button: BaseButton;
-@export var text: Label;
-@export var delay_label: Label;
-@export var delay_slider: HSlider;
+# === STARTING STATE ===
+func reset():
+	clear_world()
+	
+	# Mailbox start
+	var mailbox: = mailbox_scene.instantiate() as Mailbox
+	mailbox.content_parent.add_child(gameboy_package_scene.instantiate(), true)
+	set_focused_item(mailbox)
+	
+	# Package start
+	#set_focused_item(gameboy_package_scene.instantiate())
+	
+	# Package start
+	#set_focused_item(gameboy_scene.instantiate())
+# ======================
 
+# UI
+@export_group("ui")
+@export var notification_button: BaseButton
+@export var permissions_button: BaseButton
+@export var app_page_button: BaseButton
+@export var hello_world_button: BaseButton
+@export var reset_button: BaseButton
+@export var text: Label
+@export var delay_label: Label
+@export var delay_slider: HSlider
+
+@export_group("nodes")
 @export var world: Node3D
-@export var mailbox: Mailbox;
-@export var gameboy: Item;
-@export var box: Box;
 @export var viewer: ObjectViewer
 @export var viewing_parent: Node3D
 
-@export var parcel_draw_sound: AudioStream
+@export_group("sound")
+@export var item_focus_sound: AudioStream
 
-# Game state
-enum GameState
-{
-	NONE,
-	MAILBOX,
-	PARCEL,
-	OBJECT,
-}
-var current_state: GameState = GameState.NONE
-var current_item: Item
-var transition_tween: Tween = null
+@export_group("")
+@export var mailbox_scene: PackedScene
+@export var gameboy_package_scene: PackedScene
+@export var gameboy_scene: PackedScene
 
-var mailbox_base_transform: Transform3D
+var focused_item: Item
+var focus_in_rotation_tween: Tween
 
 # Android
 const ANDROID_PLUGIN_NAME: = "MailboxAndroidPlugin"
 var android_plugin: Object;
 
 func _ready() -> void:
+	
+	# Globals
 	Globals.game = self
 	
+	# Android stuff
 	if Engine.has_singleton(ANDROID_PLUGIN_NAME):
 		android_plugin = Engine.get_singleton(ANDROID_PLUGIN_NAME)
 		android_plugin.connect("post_notifications_permission_result_received", on_post_notifications_permission_result_received)
-	
 	if android_plugin == null:
 		notification_button.disabled = true;
 		permissions_button.disabled = true;
@@ -52,213 +64,146 @@ func _ready() -> void:
 		hello_world_button.disabled = true;
 		delay_slider.editable = false;
 	
+	# UI buttons
 	text.text = "uninitialized"
 	notification_button.pressed.connect(on_notification_button_pressed)
 	permissions_button.pressed.connect(on_permissions_button_pressed)
 	app_page_button.pressed.connect(on_app_page_button_pressed)
 	hello_world_button.pressed.connect(on_hello_world_button_pressed)
 	reset_button.pressed.connect(on_reset_button_pressed)
-	
-	mailbox_base_transform = mailbox.transform
-	
-	# remove child of viewing_parent. They are useful to tune transforms in editor but they may fuck up raycasts and stuff runtime
-	for n in viewing_parent.get_children():
-		n.queue_free()
-	
 	update_delay_label()
 	delay_slider.value_changed.connect(on_delay_value_changed)
-	
 	text.text = "initialiazing"
 	
-	mailbox.set_state(Mailbox.State.DISABLED)
-	box.visible = false
+	# Scene setup
+	for n in viewing_parent.get_children(): # remove child of viewing_parent. They are useful to tune transforms in editor but they may fuck up raycasts and stuff runtime
+		n.queue_free()
+	
 	call_deferred("late_ready")
 	
 func late_ready():
-	#set_state(GameState.OBJECT)
-	#set_state(GameState.MAILBOX)
-	set_state(GameState.PARCEL)
+	reset()
 	
-	#box.set_tape_unlocked()
-	#box.set_all_flaps_opened()
+func clear_world():
+	for n in world.get_children():
+		n.queue_free()
 	
-func set_state(state: GameState):
-	if state == current_state: return
+func set_focused_item(item: Item):
+	if focused_item != null:
+		internal_unfocus_item(focused_item)
+		focused_item.queue_free()
 	
-	# Exit
-	match current_state:
-		GameState.MAILBOX:
-			mailbox.set_state(Mailbox.State.DISABLED)
-			
-			box.clickable_collider.disabled = true
-			box.visible = true
-			if transition_tween != null:
-				transition_tween.kill()
-				transition_tween = null
-			
-		GameState.PARCEL:
-			box.visible = false
-			viewer.target = null
-			viewer.play_sounds = false
-			if transition_tween != null:
-				transition_tween.kill()
-				transition_tween = null
-			gameboy.clickable_collider.disabled = true
-			
-		GameState.OBJECT:
-			current_item.axis_lock_linear_x = false
-			current_item.axis_lock_linear_y = false
-			current_item.axis_lock_linear_z = false
-			current_item.collision_mask = 0b0000_01110
-			current_item.on_focus_lost()
-			current_item = null
-			viewer.target = null
+	focused_item = item
 	
-	current_state = state
-	
-	# Enter
-	match current_state:
-		GameState.MAILBOX:
-			mailbox.set_state(Mailbox.State.ENABLED)
-			mailbox.can_open = true
-			mailbox.set_closed()
-			
-			mailbox.transform = mailbox_base_transform
-			
-			# hack until objects are handled generically
-			gameboy.reparent(box.content_parent, false)
-			gameboy.transform = Transform3D.IDENTITY
-			gameboy.freeze = true
-			
-			box.visible = true
-			box.clickable_collider.disabled = false
-			box.reparent(mailbox.content_parent, false)
-			box.transform = Transform3D.IDENTITY
-			box.reset()
-			
-		GameState.PARCEL:
-			box.visible = true
-			
-			viewer.target = box
-			viewer.play_sounds = true
-			
-			# hack until objects are handled generically
-			gameboy.reparent(box.content_parent, false)
-			gameboy.transform = Transform3D.IDENTITY
-			gameboy.clickable_collider.disabled = false
-			gameboy.freeze = true
-			
-			box.reparent(world, false)
-			box.transform = viewing_parent.transform * box.get_base_viewing_transform()
-			box.reset()
-			box.can_unlock = true
-			box.foam_spawner.spawn_foam()
+	if focused_item != null:
+		internal_focus_item(focused_item)
+		focused_item.transform = viewing_parent.transform * focused_item.get_base_viewing_transform()
 
-			
-		GameState.OBJECT:
-			# hack for debug
-			if current_item == null:
-				current_item = gameboy
-			assert(current_item != null)
-			
-			current_item.reparent(world, false)
-			current_item.transform = viewing_parent.transform * current_item.get_base_viewing_transform()
-			current_item.axis_lock_linear_x = true
-			current_item.axis_lock_linear_y = true
-			current_item.axis_lock_linear_z = true
-			current_item.collision_mask = 0
-			current_item.axis_lock_linear_z = true
-			#current_item.angular_velocity = Vector3.ZERO
-			
-			viewer.target = current_item
-			
-			current_item.on_focus_gained()
+func focus_item(item: Item):
+	if item == focused_item: return
 	
-func _process(delta: float) -> void:
+	var out_item = focused_item
+	focused_item = item
 	
-	# Update state
-	match current_state:
-		GameState.MAILBOX:
-			if transition_tween != null: return
+	# out animation
+	if out_item != null:
+		internal_unfocus_item(out_item)
+		var target_transform: Transform3D = out_item.transform\
+			.translated(Vector3(0,0,-200))\
+			.scaled(Vector3(0.02,0.02,0.02))
 			
-			if GameInput.has_just_tapped:
-				var area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0001)
-				if area != null: 
-					var hit_box: = Tools.find_parent_by_type(area, "Box") as Box
-					if hit_box != null:
-						
-						# Mailbox to parcel transition
-						var mailbox_target_transform: = mailbox.transform\
-							.translated(Vector3(0,0,-200))\
-							.scaled(Vector3(0.0001,0.0001,0.0001))
-							
-						transition_tween = get_tree().create_tween()
-						transition_tween.tween_property(mailbox, "transform", mailbox_target_transform, 0.4)\
-							.set_ease(Tween.EASE_IN)\
-							.set_trans(Tween.TRANS_BACK)
-						
-						box.reparent(world)
-						
-						transition_tween.parallel().tween_property(box, "transform", viewing_parent.transform * box.get_base_viewing_transform(), 0.7)\
-							.set_ease(Tween.EASE_OUT)\
-							.set_trans(Tween.TRANS_ELASTIC)\
-							.set_delay(0.4)
-							
-						transition_tween.tween_callback(on_transition_over)
-						mailbox.can_open = false
-						
-						AudioManager.play_3d_sound(parcel_draw_sound, box.global_position)
-						
-						return
-						
-							
-		GameState.PARCEL:
-			if transition_tween != null: return
-			
-			if box.is_any_flap_opened() && gameboy.get_parent_node_3d() != Globals.game.world:
-				gameboy.freeze = false
-				gameboy.reparent(Globals.game.world)
-			
-			if GameInput.has_just_tapped:
-				if true:
-					var item_area = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0111)
-					if item_area != null:
-						var item = Tools.find_parent_by_type(item_area, "Item") as Item
-						if item == null: return
-						current_item = item
-						
-						# Parcel to object transition
-						var parcel_target_transform: = box.transform\
-							.translated(mailbox.position - Vector3(0,0,-200))\
-							.scaled(Vector3(0.0001,0.0001,0.0001))
-							
-						transition_tween = get_tree().create_tween()
-						transition_tween.tween_property(box, "transform", parcel_target_transform, 0.4)\
-							.set_ease(Tween.EASE_IN)\
-							.set_trans(Tween.TRANS_BACK)
-						
-						current_item.reparent(world)
-						transition_tween.parallel().tween_property(current_item, "transform", viewing_parent.transform * current_item.get_base_viewing_transform(), 1)\
-							.set_ease(Tween.EASE_OUT)\
-							.set_trans(Tween.TRANS_ELASTIC)\
-							.set_delay(0.3)
-							
-						transition_tween.tween_callback(on_transition_over)
-						
-						AudioManager.play_3d_sound(parcel_draw_sound, current_item.global_position)
-						
-						return
-			
-func _physics_process(delta):
-	# Update state
-	match current_state:
-		GameState.PARCEL:
-			if box.unlocking_touch_index < 0:
-				viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
+		var tween = get_tree().create_tween()
+		tween.tween_property(out_item, "transform", target_transform, 0.4)\
+			.set_ease(Tween.EASE_IN)\
+			.set_trans(Tween.TRANS_BACK)
+		tween.tween_callback(func():
+			out_item.queue_free()
+		)
+	
+	# in animation
+	if focused_item != null:
 		
-		GameState.OBJECT:
-			if !current_item.is_consuming_input:
-				viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
+		internal_focus_item(item)
+		focused_item.is_focused = true
+		
+		const TWEEN_DELAY: = 0.3
+		const TWEEN_TIME: = 1.0
+		const TWEEN_EASE: = Tween.EASE_OUT
+		const TWEEN_TRANS: = Tween.TRANS_ELASTIC
+		
+		var tween = get_tree().create_tween()
+		tween.set_process_mode(Tween.TweenProcessMode.TWEEN_PROCESS_PHYSICS)
+		
+		var target_transform = viewing_parent.global_transform * focused_item.get_base_viewing_transform()
+		tween.tween_property(focused_item, "position", target_transform * Vector3.ZERO, TWEEN_TIME)\
+			.from_current()\
+			.set_ease(TWEEN_EASE)\
+			.set_trans(TWEEN_TRANS)\
+			.set_delay(TWEEN_DELAY)
+			
+		tween.parallel().tween_property(focused_item, "scale", target_transform.basis.get_scale(), TWEEN_TIME)\
+			.from_current()\
+			.set_ease(TWEEN_EASE)\
+			.set_trans(TWEEN_TRANS)\
+			.set_delay(TWEEN_DELAY)
+		
+		# rotation tween is separate so that we can cancel it by interacting
+		focus_in_rotation_tween = get_tree().create_tween()
+		tween.set_process_mode(Tween.TweenProcessMode.TWEEN_PROCESS_PHYSICS)
+		focus_in_rotation_tween.tween_property(focused_item, "rotation", target_transform.basis.get_euler(), TWEEN_TIME)\
+			.from_current()\
+			.set_ease(TWEEN_EASE)\
+			.set_trans(TWEEN_TRANS)\
+			.set_delay(TWEEN_DELAY)
+		
+		AudioManager.play_3d_sound(item_focus_sound, focused_item.global_position)
+		
+	
+
+func internal_focus_item(item: Item):
+	assert(item != null)
+	if item.get_parent_node_3d() != null:
+		item.reparent(world, true)
+	else:
+		world.add_child(item)
+	item.is_focused = true
+	viewer.target = item
+	item.on_focus_gained()
+	
+	var rb: = (item as Node3D) as RigidBody3D # fu gdscript
+	if rb != null:
+		#rb.freeze = true
+		#rb.angular_velocity = Vector3.ZERO
+		#rb.linear_velocity = Vector3.ZERO
+		rb.axis_lock_linear_x = true
+		rb.axis_lock_linear_y = true
+		rb.axis_lock_linear_z = true
+	
+
+func internal_unfocus_item(item: Item):
+	assert(item != null)
+	item.is_focused = false
+	item.on_focus_lost()
+
+
+func _process(delta: float) -> void:
+	if GameInput.has_just_tapped:
+		var collision: Node = Tools.get_collision_under_screen_position(GameInput.tap_position, 0b0000_0111)
+		if collision != null:
+			var item: = collision as Item
+			if item == null: return	
+			focus_item(item)
+
+
+func _physics_process(delta):
+	if focused_item != null && !focused_item.is_consuming_input && focused_item.can_rotate:
+		viewer.update(delta, GameInput.is_dragging, GameInput.drag_delta)
+		
+		if viewer.smoothed_drag_input.length() > 1.0:
+			if focus_in_rotation_tween != null:
+				focus_in_rotation_tween.kill()
+				focus_in_rotation_tween = null
+	
 
 func on_notification_button_pressed() -> void:
 	android_plugin.test_notifications()
@@ -285,18 +230,8 @@ func on_hello_world_button_pressed():
 	pass
 	
 func on_reset_button_pressed():
-	set_state(GameState.NONE)
-	set_state(GameState.MAILBOX)
+	reset()
 	
 func on_post_notifications_permission_result_received(result: bool):
 	print("Permission: %s" % result)
 	pass
-
-func on_transition_over():
-	match current_state:
-		GameState.MAILBOX:
-			set_state(GameState.PARCEL)
-		
-		GameState.PARCEL:
-			set_state(GameState.OBJECT)
-	

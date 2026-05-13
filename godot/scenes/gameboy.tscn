@@ -233,6 +233,7 @@ physics_impact_sound_max_impulse = 3.0
 physics_impact_sound = ExtResource("9_kfybk")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
 clickable_collider = NodePath("clickable_area/clickable_collider")
+can_rotate = true
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1632788229) index="0" unique_id=737686583]
 bones/2/rotation = Quaternion(0.7071068, -1.8647015e-07, -2.643272e-08, 0.7071068)

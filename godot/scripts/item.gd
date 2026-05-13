@@ -3,8 +3,9 @@ class_name Item
 
 @export var viewing_base_rotation: Vector3
 @export var viewing_base_scale: Vector3 = Vector3.ONE
-@export var clickable_collider: CollisionShape3D
+@export var can_rotate: bool
 
+var is_focused: bool
 var is_consuming_input: bool
 
 func on_focus_gained():

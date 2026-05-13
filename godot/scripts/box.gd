@@ -1,4 +1,4 @@
-extends Node3D
+extends Item
 class_name Box
 
 @export var animation_player: AnimationPlayer
@@ -10,15 +10,10 @@ class_name Box
 @export var flap_open_time: float = 1.0
 @export var flap_close_time: float = 1.0
 
-@export var viewing_base_rotation: Vector3
-@export var viewing_base_scale: Vector3 = Vector3.ONE
-
 @export var flap_l_area: CollisionObject3D
 @export var flap_r_area: CollisionObject3D
 @export var flap_f_area: CollisionObject3D
 @export var flap_b_area: CollisionObject3D
-
-@export var clickable_collider: CollisionShape3D
 
 @export var foam_spawner: FoamSpawner
 
@@ -34,6 +29,7 @@ var current_unlock_ratio: float = 0.0
 var target_unlock_ratio: float = 0.0
 
 var tape_open_animation_length: float
+var physics_initialized: bool = false
 
 class FlapData:
 	var open: bool
@@ -76,6 +72,7 @@ func _physics_process(dt: float):
 func _process(dt: float):
 	
 	update_tape_interaction()
+	is_consuming_input = unlocking_touch_index >= 0
 	
 	#Tools.draw_collision_shape_3d(flap_l_area.get_child(0) as CollisionShape3D)
 	#Tools.draw_collision_shape_3d(flap_r_area.get_child(0) as CollisionShape3D)
@@ -142,7 +139,7 @@ func reset():
 	reset_flap(flap_f)
 	reset_flap(flap_b)
 	
-	foam_spawner.clear_spawned_foam()
+	shutdown_physics()
 
 func update_tape_interaction():
 	if is_unlocked || !can_unlock:
@@ -195,6 +192,7 @@ func update_tape_interaction():
 		var current_unlock_point: = unlock_path.global_transform * unlock_path.curve.sample_baked(offset)
 		if touch.just_pressed && result.result_A.distance_to(current_unlock_point) <= interaction_radius:
 			unlocking_touch_index = touch.index
+			initialize_physics() # init physics when we first touch tape
 	else:
 		if touch.index != unlocking_touch_index || touch.just_released || touch.just_canceled:
 			unlocking_touch_index = -1
@@ -265,3 +263,29 @@ func set_tape_unlocked():
 	unlocking_touch_index = -1
 	animation_tree.set(&"parameters/tape_disable/add_amount", 1.0)
 	animation_tree.set(&"parameters/tape_seek/seek_request", 1.0)
+	
+func on_focus_gained():
+	can_unlock = true
+	pass
+	
+func on_focus_lost():
+	can_unlock = false
+	pass
+	
+func shutdown_physics():
+	foam_spawner.clear_spawned_foam()
+	var rigidbodies: = Tools.find_children_by_type(self, "RigidBody3D")
+	for rb in rigidbodies:
+		(rb as RigidBody3D).freeze = true
+	physics_initialized = false
+	
+	
+func initialize_physics():
+	if physics_initialized: return
+	var rigidbodies: = Tools.find_children_by_type(self, "RigidBody3D")
+	for rb in rigidbodies:
+		(rb as RigidBody3D).freeze = false
+		rb.reparent(Globals.game.world)
+	physics_initialized = true
+	foam_spawner.spawn_foam()
+	

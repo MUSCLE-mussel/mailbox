@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b8ssfw6m4wf0j"]
+[gd_scene format=3 uid="uid://dbpwjc8k1elil"]
 
 [ext_resource type="PackedScene" uid="uid://b100hjrkso40a" path="res://meshes/mailbox/mailbox.glb" id="1_3eaje"]
 [ext_resource type="Script" uid="uid://yvidg6cdoya1" path="res://scripts/mailbox.gd" id="2_80nar"]
@@ -6,33 +6,63 @@
 [ext_resource type="AudioStream" uid="uid://3msatra1ms0d" path="res://sounds/mailbox_close.wav" id="4_p65c8"]
 [ext_resource type="AudioStream" uid="uid://b86fn0u725wo1" path="res://sounds/mailbox_blam.wav" id="5_8jpdh"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3eaje"]
-size = Vector3(2.2109375, 2.538086, 1.9338379)
+[sub_resource type="BoxShape3D" id="BoxShape3D_xb57f"]
+size = Vector3(2.0146484, 0.19921875, 1.7497559)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_80nar"]
-size = Vector3(2.2109375, 2.538086, 0.42230225)
+[sub_resource type="BoxShape3D" id="BoxShape3D_p65c8"]
+size = Vector3(2.0146484, 2.2988281, 0.17871094)
 
-[node name="mailbox" unique_id=220009672 node_paths=PackedStringArray("animation_player", "content_parent", "closed_collider", "opened_collider") instance=ExtResource("1_3eaje")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_8jpdh"]
+size = Vector3(0.19555664, 2.3225098, 1.7600098)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0r8m2"]
+size = Vector3(1.7181396, 2.0256348, 0.15072632)
+
+[node name="Mailbox" type="RigidBody3D" unique_id=1263884090 node_paths=PackedStringArray("rigidbody", "door_collider", "door_collider_anchor", "animation_player", "content_parent")]
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.0
+freeze = true
 script = ExtResource("2_80nar")
-animation_player = NodePath("AnimationPlayer")
-content_parent = NodePath("box/content_parent")
-closed_collider = NodePath("area/closed_collider")
-opened_collider = NodePath("area/opened_collider")
+rigidbody = NodePath(".")
+door_collider = NodePath("door_collider")
+door_collider_anchor = NodePath("mesh/box/door/door_collider_anchor")
+animation_player = NodePath("mesh/AnimationPlayer")
+content_parent = NodePath("content_parent")
 open_sound = ExtResource("3_xb57f")
 close_sound = ExtResource("4_p65c8")
 closed_sound = ExtResource("5_8jpdh")
 
-[node name="area" type="Area3D" parent="." index="0" unique_id=829349597]
-collision_mask = 0
+[node name="mesh" parent="." unique_id=69079285 instance=ExtResource("1_3eaje")]
 
-[node name="closed_collider" type="CollisionShape3D" parent="area" index="0" unique_id=2114456713]
-shape = SubResource("BoxShape3D_3eaje")
-disabled = true
+[node name="door_collider_anchor" type="Node3D" parent="mesh/box/door" parent_id_path=PackedInt32Array(69079285, 1773621339) index="0" unique_id=650870807]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84710693, 0, 0.001449585)
 
-[node name="opened_collider" type="CollisionShape3D" parent="area" index="1" unique_id=1992158821]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.7557678)
-shape = SubResource("BoxShape3D_80nar")
-disabled = true
+[node name="bottom_collider" type="CollisionShape3D" parent="." unique_id=1512121103]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.0805302, 0)
+shape = SubResource("BoxShape3D_xb57f")
 
-[node name="content_parent" type="Marker3D" parent="box" parent_id_path=PackedInt32Array(1268553355) index="2" unique_id=155672104]
+[node name="top_collider" type="CollisionShape3D" parent="." unique_id=689317812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0724142, 0)
+shape = SubResource("BoxShape3D_xb57f")
+
+[node name="back_collider" type="CollisionShape3D" parent="." unique_id=707956366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.009360909, -0.8017223)
+shape = SubResource("BoxShape3D_p65c8")
+
+[node name="left_collider" type="CollisionShape3D" parent="." unique_id=847048661]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9144527, 0, 0)
+shape = SubResource("BoxShape3D_8jpdh")
+
+[node name="right_collider" type="CollisionShape3D" parent="." unique_id=1620183775]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9309286, 0, 0)
+shape = SubResource("BoxShape3D_8jpdh")
+
+[node name="door_collider" type="CollisionShape3D" parent="." unique_id=569285899]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.021166086, 0, 0.83078396)
+shape = SubResource("BoxShape3D_0r8m2")
+
+[node name="content_parent" type="Marker3D" parent="." unique_id=597069548]
 transform = Transform3D(-0.30564967, 0, -0.31650954, 0, 0.44, 0, 0.31650954, 0, -0.30564967, 0, -0.7, 0)
+
+[editable path="mesh"]

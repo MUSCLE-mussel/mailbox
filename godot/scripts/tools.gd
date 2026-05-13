@@ -1,17 +1,34 @@
 extends Node
 class_name _Tools
 
-func find_parent_by_type(node: Node, clss_name: String, recursive: bool = true) -> Node:
-	var parent: = node.get_parent()
-	if parent != null:
-		if does_script_inherit_from(parent.get_script(), clss_name):
-			return parent
-		if parent.is_class(clss_name) || get_class_name(parent) == clss_name:
-			return parent
-		if recursive:
-			return find_parent_by_type(parent, clss_name, true)
+func find_parent_by_type(node: Node, type_name: String, check_self: bool = true, recursive: bool = true) -> Node:
+	if node == null: return null
+	if check_self:
+		if is_node_of_type(node, type_name):
+			return node
+	if recursive:
+		return find_parent_by_type(node.get_parent(), type_name, true, true)
 	return null
-
+	
+func find_children_by_type(node: Node, type_name: String, recursive: bool = true) -> Array[Node]:
+	var result: Array[Node]
+	if node == null: return result
+	for child in node.get_children():
+		if is_node_of_type(child, type_name):
+			result.append(child)
+		if recursive:
+			result.append_array(find_children_by_type(child, type_name, true))
+	return result
+	
+func is_node_of_type(node: Node, type_name: String) -> bool:
+	if node == null:
+		return false
+	if does_script_inherit_from(node.get_script(), type_name):
+		return true
+	if node.is_class(type_name):
+		return true
+	return false
+	
 func does_script_inherit_from(script: Script, clss_name: String, check_self: bool = true) -> bool:
 	if script == null:
 		return false
