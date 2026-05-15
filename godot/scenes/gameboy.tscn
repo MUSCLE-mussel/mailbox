@@ -13,9 +13,6 @@
 [ext_resource type="AudioStream" uid="uid://cqxidj3ic8wa7" path="res://sounds/gb_power_off.tres" id="8_ouaj8"]
 [ext_resource type="AudioStream" uid="uid://bxstg4vnx46j5" path="res://sounds/thud_sounds.tres" id="9_kfybk"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_l7tuu"]
-size = Vector3(2.170166, 2.6782227, 0.87109375)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_bl50p"]
 size = Vector3(0.25610352, 0.24584961, 0.16308594)
 
@@ -27,7 +24,7 @@ radius = 0.20410156
 size = Vector3(0.37304688, 0.14038086, 0.24511719)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ldcwh"]
-size = Vector3(2.038086, 2.5610352, 0.59820557)
+size = Vector3(0.359, 0.451, 0.105)
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_bl50p"]
 filter_enabled = true
@@ -206,7 +203,7 @@ nodes/dpad_right/position = Vector2(1740, 520)
 "nodes/TimeScale 7/position" = Vector2(1740, 700)
 node_connections = [&"output", 0, &"Add2 4", &"Blend2", 0, &"Animation", &"Blend2", 1, &"TimeScale", &"power_switch", 0, &"Animation 2", &"TimeScale", 0, &"power_switch", &"Blend2 2", 0, &"Blend2", &"Blend2 2", 1, &"TimeScale 2", &"Blend2 3", 0, &"Blend2 2", &"Blend2 3", 1, &"TimeScale 3", &"a", 0, &"Animation 3", &"TimeScale 2", 0, &"a", &"b", 0, &"Animation 4", &"TimeScale 3", 0, &"b", &"Add2", 0, &"Blend2 3", &"Add2", 1, &"TimeScale 4", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"TimeScale 5", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"TimeScale 6", &"Add2 4", 0, &"Add2 3", &"Add2 4", 1, &"TimeScale 7", &"dpad_up", 0, &"Animation 5", &"TimeScale 4", 0, &"dpad_up", &"dpad_down", 0, &"Animation 6", &"TimeScale 5", 0, &"dpad_down", &"dpad_left", 0, &"Animation 7", &"TimeScale 6", 0, &"dpad_left", &"dpad_right", 0, &"Animation 8", &"TimeScale 7", 0, &"dpad_right"]
 
-[node name="gameboy" unique_id=640936949 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "gameboy_game", "clickable_collider") instance=ExtResource("1_l7tuu")]
+[node name="gameboy" unique_id=1910348342 node_paths=PackedStringArray("dpad_left_area", "dpad_right_area", "dpad_up_area", "dpad_down_area", "a_area", "b_area", "power_switch_area", "animation_tree", "gameboy_game", "origin") instance=ExtResource("1_l7tuu")]
 collision_layer = 4
 collision_mask = 14
 contact_monitor = true
@@ -232,74 +229,77 @@ physics_impact_sound_min_impulse = 0.2
 physics_impact_sound_max_impulse = 3.0
 physics_impact_sound = ExtResource("9_kfybk")
 viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
-clickable_collider = NodePath("clickable_area/clickable_collider")
+viewing_base_scale = Vector3(5.681, 5.681, 5.681)
+origin = NodePath("origin")
 can_rotate = true
 
-[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(1632788229) index="0" unique_id=737686583]
-bones/2/rotation = Quaternion(0.7071068, -1.8647015e-07, -2.643272e-08, 0.7071068)
+[node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(641643262) index="0" unique_id=753844770]
+bones/1/position = Vector3(0.64335763, 1.4463114, 2.9802322e-08)
+bones/2/rotation = Quaternion(0.7071068, -1.8647002e-07, -2.6432636e-08, 0.7071068)
+bones/3/position = Vector3(0.24633418, -0.46929598, 0.20894527)
+bones/4/position = Vector3(0.65706813, -0.22247492, 0.20894527)
 
-[node name="clickable_area" type="Area3D" parent="." index="1" unique_id=1759315604]
-collision_mask = 0
-
-[node name="clickable_collider" type="CollisionShape3D" parent="clickable_area" index="0" unique_id=1621944228]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.22094727, 0)
-shape = SubResource("BoxShape3D_l7tuu")
-disabled = true
-
-[node name="dpad_left_area" type="Area3D" parent="." index="2" unique_id=817833841]
+[node name="dpad_left_area" type="Area3D" parent="." index="1" unique_id=817833841]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="dpad_left_collider" type="CollisionShape3D" parent="dpad_left_area" index="0" unique_id=2090146515]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6848154, -0.4117213, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
-[node name="dpad_right_area" type="Area3D" parent="." index="3" unique_id=1967582123]
+[node name="dpad_right_area" type="Area3D" parent="." index="2" unique_id=1967582123]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="dpad_right_collider" type="CollisionShape3D" parent="dpad_right_area" index="0" unique_id=927985838]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2158063, -0.4117213, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
-[node name="dpad_up_area" type="Area3D" parent="." index="4" unique_id=2125640431]
+[node name="dpad_up_area" type="Area3D" parent="." index="3" unique_id=2125640431]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="dpad_up_collider" type="CollisionShape3D" parent="dpad_up_area" index="0" unique_id=1262758022]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.17318234, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
-[node name="dpad_down_area" type="Area3D" parent="." index="5" unique_id=1475070427]
+[node name="dpad_down_area" type="Area3D" parent="." index="4" unique_id=1475070427]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="dpad_down_collider" type="CollisionShape3D" parent="dpad_down_area" index="0" unique_id=350150029]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.44836158, -0.6519145, 0.33620322)
 shape = SubResource("BoxShape3D_bl50p")
 
-[node name="b_area" type="Area3D" parent="." index="6" unique_id=723674048]
+[node name="b_area" type="Area3D" parent="." index="5" unique_id=723674048]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="b_collider" type="CollisionShape3D" parent="b_area" index="0" unique_id=1239088858]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.24552917, -0.4709435, 0.32100028)
 shape = SubResource("CylinderShape3D_bl50p")
 
-[node name="a_area" type="Area3D" parent="." index="7" unique_id=469782139]
+[node name="a_area" type="Area3D" parent="." index="6" unique_id=469782139]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="a_collider" type="CollisionShape3D" parent="a_area" index="0" unique_id=18843300]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.65686655, -0.22222765, 0.32186484)
 shape = SubResource("CylinderShape3D_bl50p")
 
-[node name="power_switch_area" type="Area3D" parent="." index="8" unique_id=1535921541]
+[node name="power_switch_area" type="Area3D" parent="." index="7" unique_id=1535921541]
+transform = Transform3D(0.176, 0, 0, 0, 0.176, 0, 0, 0, 0.176, 0, 0, 0)
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="power_switch_area" index="0" unique_id=913691901]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5712409, 1.4738008, 0)
 shape = SubResource("BoxShape3D_8noqh")
 
-[node name="physics_collider" type="CollisionShape3D" parent="." index="9" unique_id=542960564]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23510742, 0.0016784668)
+[node name="physics_collider" type="CollisionShape3D" parent="." index="8" unique_id=542960564]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.040704995, 0.0016784668)
 shape = SubResource("BoxShape3D_ldcwh")
 
-[node name="AnimationTree" type="AnimationTree" parent="." index="11" unique_id=1142543275]
+[node name="AnimationTree" type="AnimationTree" parent="." index="10" unique_id=1142543275]
 tree_root = SubResource("AnimationNodeBlendTree_bl50p")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Blend2/blend_amount = 1.0
@@ -324,7 +324,7 @@ parameters/dpad_left/seek_request = -1.0
 parameters/dpad_right/seek_request = -1.0
 "parameters/TimeScale 7/scale" = 0.0
 
-[node name="game" type="SubViewport" parent="." index="12" unique_id=111498510]
+[node name="game" type="SubViewport" parent="." index="11" unique_id=111498510]
 disable_3d = true
 handle_input_locally = false
 size = Vector2i(160, 144)
@@ -333,6 +333,9 @@ size = Vector2i(160, 144)
 title_sound = ExtResource("4_0coaa")
 sound_position = NodePath("../../Armature")
 
-[node name="screen" type="Sprite3D" parent="." index="13" unique_id=1020907301]
-transform = Transform3D(0.6502582, 0, 0, 0, 0.6502582, 0, 0, 0, 1, 0, 0.7505083, 0.28760266)
+[node name="screen" type="Sprite3D" parent="." index="12" unique_id=1020907301]
+transform = Transform3D(0.118636616, 0, 0, 0, 0.118636616, 0, 0, 0, 0.175, 0, 0.12838697, 0.05031857)
 texture = ExtResource("4_ldcwh")
+
+[node name="origin" type="Marker3D" parent="." index="13" unique_id=198923779]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, -0.050887812)

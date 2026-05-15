@@ -7,8 +7,10 @@ func reset():
 	
 	# Mailbox start
 	var mailbox: = mailbox_scene.instantiate() as Mailbox
-	mailbox.content_parent.add_child(gameboy_package_scene.instantiate(), true)
+	var content: = gameboy_package_scene.instantiate() as Item
+	mailbox.content_parent.add_child(content, true)
 	set_focused_item(mailbox)
+	content.align_with_origin(mailbox.content_parent)
 	
 	# Package start
 	#set_focused_item(gameboy_package_scene.instantiate())

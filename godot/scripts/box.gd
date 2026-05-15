@@ -169,7 +169,7 @@ func update_tape_interaction():
 		unlocking_touch_index = -1
 		return
 	
-	var l: = unlock_path.curve.get_baked_length()
+	var path_length: = unlock_path.curve.get_baked_length()
 	var path_begin: = unlock_path.global_transform * unlock_path.curve.get_point_position(0);
 	var path_end: = unlock_path.global_transform * unlock_path.curve.get_point_position(unlock_path.curve.point_count-1);
 		
@@ -188,8 +188,9 @@ func update_tape_interaction():
 	#DebugDraw3D.draw_sphere(result.result_A, 0.1)
 	
 	if unlocking_touch_index < 0:
-		var offset = max(current_unlock_ratio * l, interaction_radius * unlock_path.global_transform.basis.get_scale().x) # small UX tweak for initial interaction that is off visual at 0
+		var offset = current_unlock_ratio * path_length
 		var current_unlock_point: = unlock_path.global_transform * unlock_path.curve.sample_baked(offset)
+		#DebugDraw3D.draw_sphere(current_unlock_point, 0.1, Color.YELLOW)
 		if touch.just_pressed && result.result_A.distance_to(current_unlock_point) <= interaction_radius:
 			unlocking_touch_index = touch.index
 			initialize_physics() # init physics when we first touch tape
@@ -200,7 +201,7 @@ func update_tape_interaction():
 	if unlocking_touch_index >= 0:
 		var path_offset: = unlock_path.curve.get_closest_offset(unlock_path.global_transform.affine_inverse() * result.result_B)
 		#DebugDraw3D.draw_sphere(unlock_path.global_transform * unlock_path.curve.sample_baked(path_offset), 0.1, Color.BISQUE)
-		target_unlock_ratio = path_offset / l
+		target_unlock_ratio = path_offset / path_length
 
 func get_base_viewing_transform() -> Transform3D:
 	return Transform3D(Basis(Quaternion.from_euler(viewing_base_rotation)).scaled(viewing_base_scale))
