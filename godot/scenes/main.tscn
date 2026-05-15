@@ -48,6 +48,7 @@ mailbox_scene = ExtResource("6_o6xl0")
 gameboy_package_scene = ExtResource("5_tipki")
 gameboy_scene = ExtResource("5_tefeu")
 game_content = ExtResource("8_85g3d")
+item_interval_in_seconds = 3600
 
 [node name="root" type="Node3D" parent="." unique_id=1193364249]
 
@@ -135,7 +136,7 @@ offset_top = 17.0
 offset_right = 718.0
 offset_bottom = 117.0
 theme = ExtResource("5_85g3d")
-text = "RESET"
+text = "RESET APP"
 
 [node name="clear_save" type="Button" parent="ui" unique_id=1432198708]
 layout_mode = 0
@@ -144,8 +145,7 @@ offset_top = 135.0
 offset_right = 718.0
 offset_bottom = 235.0
 theme = ExtResource("5_85g3d")
-text = "CLEAR SAVE
-"
+text = "RESET APP & SAVE"
 
 [node name="delay_widget" type="Control" parent="ui" unique_id=2053507285]
 visible = false

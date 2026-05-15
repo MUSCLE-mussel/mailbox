@@ -33,9 +33,9 @@ class AndroidExportPlugin extends EditorExportPlugin:
 	func _get_android_dependencies(platform, debug):
 		# TODO: Add remote dependices here.
 		if debug:
-			return PackedStringArray([])
+			return PackedStringArray(["androidx.work:work-runtime-ktx:2.11.2"])
 		else:
-			return PackedStringArray([])
+			return PackedStringArray(["androidx.work:work-runtime-ktx:2.11.2"])
 
 	func _get_name():
 		return _plugin_name

@@ -14,12 +14,16 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import org.godotengine.godot.Godot
 import org.godotengine.godot.error.Error
 import org.godotengine.godot.plugin.GodotPlugin
 import org.godotengine.godot.plugin.SignalInfo
 import org.godotengine.godot.plugin.UsedByGodot
 import org.godotengine.godot.utils.PermissionsUtil.requestPermissions
+import java.util.concurrent.TimeUnit
 
 
 @Suppress("unused")
@@ -28,6 +32,8 @@ class GodotAndroidPlugin(godot: Godot): GodotPlugin(godot)
     val POST_NOTIFICATIONS_PERMISSION = "android.permission.POST_NOTIFICATIONS"
     val POST_NOTIFICATIONS_PERMISSION_RESULT_RECEIVED_SIGNAL =
         SignalInfo("post_notifications_permission_result_received", Boolean::class.javaObjectType)
+    val RESTART_REQUESTED_SIGNAL =
+        SignalInfo("restart_requested")
 
     val MAIL_NOTIFICATION_CHANNEL_ID = "mail"
 
@@ -37,6 +43,7 @@ class GodotAndroidPlugin(godot: Godot): GodotPlugin(godot)
     {
         return setOf(
             POST_NOTIFICATIONS_PERMISSION_RESULT_RECEIVED_SIGNAL,
+            RESTART_REQUESTED_SIGNAL,
         )
     }
 
@@ -55,12 +62,26 @@ class GodotAndroidPlugin(godot: Godot): GodotPlugin(godot)
     }
 
     override fun onMainPause() {}
-    override fun onMainResume() {}
+    override fun onMainResume()
+    {
+        runOnHostThread {
+            val shouldRestart = activity?.intent?.getBooleanExtra("should_restart", false) ?: false
+            activity?.intent?.putExtra("should_restart", false)
+
+            if (shouldRestart)
+            {
+                Log.d(pluginName, "emit RESTART_REQUESTED_SIGNAL")
+                emitSignal(
+                    godot, getPluginName(), RESTART_REQUESTED_SIGNAL
+                )
+            }
+        }
+    }
     override fun onMainDestroy() {}
 
     override fun onMainActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
     {
-        Log.d(pluginName, "activity result: $requestCode $resultCode $data")
+//        Log.d(pluginName, "onMainActivityResult: $requestCode $resultCode $data")
     }
 
     override fun onMainRequestPermissionsResult(
@@ -125,6 +146,27 @@ class GodotAndroidPlugin(godot: Godot): GodotPlugin(godot)
             Log.d(pluginName, "Hello World")
         }
     }
+    @UsedByGodot
+    fun schedule_notification(delaySeconds: Int)
+    {
+        runOnHostThread {
+            Log.d(pluginName, "queue notification: $delaySeconds")
+
+            val inputData = workDataOf(
+                "channel_id" to MAIL_NOTIFICATION_CHANNEL_ID
+            )
+
+            val workRequest =
+                OneTimeWorkRequestBuilder<MailboxWorker>()
+                    .setInitialDelay(delaySeconds.toLong(), TimeUnit.SECONDS)
+                    .setInputData(inputData)
+                    .build()
+
+            WorkManager.getInstance(context)
+                .enqueue(workRequest)
+        }
+    }
+
 
     @UsedByGodot
     fun test_notifications()

@@ -1,5 +1,5 @@
 extends Resource
 class_name SaveData
 
-@export var hello_count: int
+@export var next_item_time: int = -1
 @export var viewed_items: Array[StringName]

@@ -5,13 +5,21 @@ class_name Game
 func reset():
 	clear_world()
 	
+	# Initial item delay (we start with empty box)
+	if save_data.next_item_time < 0:
+		try_schedule_next_item()
+		write_save_data(save_data)
+
 	# Mailbox start
 	var content_scene: PackedScene
-	for key in game_content.items:
-		if save_data.viewed_items.find(key) < 0:
-			current_content_name = key
-			content_scene = game_content.items[key]
-			break
+	var time: = get_current_unix_time()
+	#print("%d/%d" % [time, save_data.next_item_time])
+	if time >= save_data.next_item_time:		
+		for key in game_content.items:
+			if save_data.viewed_items.find(key) < 0:
+				current_content_name = key
+				content_scene = game_content.items[key]
+				break
 			
 	var mailbox: = mailbox_scene.instantiate() as Mailbox
 	set_focused_item(mailbox)
@@ -52,6 +60,7 @@ func reset():
 @export var gameboy_package_scene: PackedScene
 @export var gameboy_scene: PackedScene
 @export var game_content: GameContent
+@export var item_interval_in_seconds: int
 
 var current_content_name: StringName
 var focused_item: Item
@@ -76,11 +85,13 @@ func _ready() -> void:
 	if Engine.has_singleton(ANDROID_PLUGIN_NAME):
 		android_plugin = Engine.get_singleton(ANDROID_PLUGIN_NAME)
 		android_plugin.connect("post_notifications_permission_result_received", on_post_notifications_permission_result_received)
+		android_plugin.connect("restart_requested", on_restart_requested)
+		android_plugin.request_notifications_permission()
 	if android_plugin == null:
 		notification_button.disabled = true;
 		permissions_button.disabled = true;
 		app_page_button.disabled = true;
-		#hello_world_button.disabled = true;
+		hello_world_button.disabled = true;
 		delay_slider.editable = false;
 	
 	# UI buttons
@@ -90,7 +101,7 @@ func _ready() -> void:
 	app_page_button.pressed.connect(on_app_page_button_pressed)
 	hello_world_button.pressed.connect(on_hello_world_button_pressed)
 	reset_button.pressed.connect(on_reset_button_pressed)
-	clear_save_button.pressed.connect(clear_save_data)
+	clear_save_button.pressed.connect(reset_app_and_save)
 	#update_delay_label()
 	delay_slider.value_changed.connect(on_delay_value_changed)
 	#text.text = "initialiazing"
@@ -200,6 +211,7 @@ func internal_focus_item(item: Item):
 	if item.validate_item_viewed && !current_content_name.is_empty():
 		if save_data.viewed_items.find(current_content_name) < 0:
 			save_data.viewed_items.append(current_content_name)
+			try_schedule_next_item()
 			write_save_data(save_data)
 			
 	viewer.target = item
@@ -222,7 +234,7 @@ func _process(delta: float) -> void:
 			if item == null: return	
 			focus_item(item)
 
-	text.text = "Hello count: %d" % save_data.hello_count
+	#text.text = "Hello count: %d" % save_data.hello_count
 
 func _physics_process(delta):
 	if focused_item != null && !focused_item.is_consuming_input && focused_item.can_rotate:
@@ -255,12 +267,15 @@ func update_delay_label():
 	delay_label.text = "Delay: %d" % delay_slider.value
 	
 func on_hello_world_button_pressed():
-	save_data.hello_count += 1
-	write_save_data(save_data)
+	#save_data.hello_count += 1
+	#write_save_data(save_data)
 	if android_plugin != null:
 		android_plugin.hello_world()
 	
 func on_reset_button_pressed():
+	reset()
+	
+func on_restart_requested():
 	reset()
 	
 func on_post_notifications_permission_result_received(result: bool):
@@ -286,3 +301,18 @@ func write_save_data(data: SaveData):
 func clear_save_data():
 	save_data = SaveData.new()
 	write_save_data(save_data)
+	
+func reset_app_and_save():
+	clear_save_data()
+	reset()
+
+func get_current_unix_time() -> int: 
+	return Time.get_unix_time_from_datetime_dict(Time.get_datetime_dict_from_system(true))
+
+func try_schedule_next_item():
+	if save_data.viewed_items.size() >= game_content.items.size():
+		return
+	
+	save_data.next_item_time = get_current_unix_time() + item_interval_in_seconds
+	if android_plugin != null:
+		android_plugin.schedule_notification(item_interval_in_seconds)

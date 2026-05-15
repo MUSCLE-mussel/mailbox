@@ -46,6 +46,7 @@ dependencies {
     implementation("androidx.core:core:1.18.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     // TODO: Additional dependencies should be added to export_plugin.gd as well.
+    implementation("androidx.work:work-runtime-ktx:2.11.2")
 }
 
 // BUILD TASKS DEFINITION
