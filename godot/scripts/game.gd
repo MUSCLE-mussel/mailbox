@@ -6,11 +6,19 @@ func reset():
 	clear_world()
 	
 	# Mailbox start
+	var content_scene: PackedScene
+	for key in game_content.items:
+		if save_data.viewed_items.find(key) < 0:
+			current_content_name = key
+			content_scene = game_content.items[key]
+			break
+			
 	var mailbox: = mailbox_scene.instantiate() as Mailbox
-	var content: = gameboy_package_scene.instantiate() as Item
-	mailbox.content_parent.add_child(content, true)
 	set_focused_item(mailbox)
-	content.align_with_origin(mailbox.content_parent)
+	if content_scene != null:
+		var mailbox_content: = content_scene.instantiate() as Item
+		mailbox.content_parent.add_child(mailbox_content, true)
+		mailbox_content.align_with_origin(mailbox.content_parent)
 	
 	# Package start
 	#set_focused_item(gameboy_package_scene.instantiate())
@@ -26,6 +34,7 @@ func reset():
 @export var app_page_button: BaseButton
 @export var hello_world_button: BaseButton
 @export var reset_button: BaseButton
+@export var clear_save_button: BaseButton
 @export var text: Label
 @export var delay_label: Label
 @export var delay_slider: HSlider
@@ -42,7 +51,9 @@ func reset():
 @export var mailbox_scene: PackedScene
 @export var gameboy_package_scene: PackedScene
 @export var gameboy_scene: PackedScene
+@export var game_content: GameContent
 
+var current_content_name: StringName
 var focused_item: Item
 var focus_in_rotation_tween: Tween
 
@@ -50,10 +61,16 @@ var focus_in_rotation_tween: Tween
 const ANDROID_PLUGIN_NAME: = "MailboxAndroidPlugin"
 var android_plugin: Object;
 
+const SAVE_PATH: = "user://save.dat"
+var save_data: SaveData
+
 func _ready() -> void:
 	
 	# Globals
 	Globals.game = self
+	
+	# Load save
+	save_data = read_save_data()
 	
 	# Android stuff
 	if Engine.has_singleton(ANDROID_PLUGIN_NAME):
@@ -63,19 +80,20 @@ func _ready() -> void:
 		notification_button.disabled = true;
 		permissions_button.disabled = true;
 		app_page_button.disabled = true;
-		hello_world_button.disabled = true;
+		#hello_world_button.disabled = true;
 		delay_slider.editable = false;
 	
 	# UI buttons
-	text.text = "uninitialized"
+	#text.text = "uninitialized"
 	notification_button.pressed.connect(on_notification_button_pressed)
 	permissions_button.pressed.connect(on_permissions_button_pressed)
 	app_page_button.pressed.connect(on_app_page_button_pressed)
 	hello_world_button.pressed.connect(on_hello_world_button_pressed)
 	reset_button.pressed.connect(on_reset_button_pressed)
-	update_delay_label()
+	clear_save_button.pressed.connect(clear_save_data)
+	#update_delay_label()
 	delay_slider.value_changed.connect(on_delay_value_changed)
-	text.text = "initialiazing"
+	#text.text = "initialiazing"
 	
 	# Scene setup
 	for n in viewing_parent.get_children(): # remove child of viewing_parent. They are useful to tune transforms in editor but they may fuck up raycasts and stuff runtime
@@ -164,22 +182,30 @@ func focus_item(item: Item):
 
 func internal_focus_item(item: Item):
 	assert(item != null)
+	
+	# add to scene tree
 	if item.get_parent_node_3d() != null:
 		item.reparent(world, true)
 	else:
 		world.add_child(item)
-	item.is_focused = true
-	viewer.target = item
-	item.on_focus_gained()
-	
+		
+	# physics
 	var rb: = (item as Node3D) as RigidBody3D # fu gdscript
 	if rb != null:
-		#rb.freeze = true
-		#rb.angular_velocity = Vector3.ZERO
-		#rb.linear_velocity = Vector3.ZERO
 		rb.axis_lock_linear_x = true
 		rb.axis_lock_linear_y = true
 		rb.axis_lock_linear_z = true
+	
+	# save item as viewed
+	if item.validate_item_viewed && !current_content_name.is_empty():
+		if save_data.viewed_items.find(current_content_name) < 0:
+			save_data.viewed_items.append(current_content_name)
+			write_save_data(save_data)
+			
+	viewer.target = item
+	item.is_focused = true
+		
+	item.on_focus_gained()
 	
 
 func internal_unfocus_item(item: Item):
@@ -196,6 +222,7 @@ func _process(delta: float) -> void:
 			if item == null: return	
 			focus_item(item)
 
+	text.text = "Hello count: %d" % save_data.hello_count
 
 func _physics_process(delta):
 	if focused_item != null && !focused_item.is_consuming_input && focused_item.can_rotate:
@@ -228,8 +255,10 @@ func update_delay_label():
 	delay_label.text = "Delay: %d" % delay_slider.value
 	
 func on_hello_world_button_pressed():
-	android_plugin.hello_world()
-	pass
+	save_data.hello_count += 1
+	write_save_data(save_data)
+	if android_plugin != null:
+		android_plugin.hello_world()
 	
 func on_reset_button_pressed():
 	reset()
@@ -237,3 +266,23 @@ func on_reset_button_pressed():
 func on_post_notifications_permission_result_received(result: bool):
 	print("Permission: %s" % result)
 	pass
+	
+func read_save_data() -> SaveData:
+	var data: SaveData
+	var file: = FileAccess.open(SAVE_PATH, FileAccess.READ)
+	if file != null:
+		data = file.get_var(true)
+		
+	if data == null:
+		data = SaveData.new()
+	return data
+	
+func write_save_data(data: SaveData):
+	var file: = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file == null:
+		return
+	file.store_var(data, true)
+	
+func clear_save_data():
+	save_data = SaveData.new()
+	write_save_data(save_data)

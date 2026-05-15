@@ -5,6 +5,7 @@ class_name Item
 @export var viewing_base_scale: Vector3 = Vector3.ONE
 @export var origin: Node3D
 @export var can_rotate: bool
+@export var validate_item_viewed: bool
 
 var is_focused: bool
 var is_consuming_input: bool

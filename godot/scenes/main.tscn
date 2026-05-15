@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://t0m4nk8ico0q" path="res://scenes/packages/gameboy_package.tscn" id="5_tipki"]
 [ext_resource type="PackedScene" uid="uid://dbpwjc8k1elil" path="res://scenes/mailbox.tscn" id="6_o6xl0"]
 [ext_resource type="Script" uid="uid://dmfbvrxq6u5iw" path="res://scripts/object_viewer.gd" id="7_o6xl0"]
+[ext_resource type="Resource" uid="uid://bdpvx0wbh44ma" path="res://game_content.tres" id="8_85g3d"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tefeu"]
 size = Vector3(8.4157715, 1, 8.124756)
@@ -27,7 +28,7 @@ max_input = 75.0
 foley_sounds = ExtResource("2_tipki")
 metadata/_custom_type_script = "uid://dmfbvrxq6u5iw"
 
-[node name="game" type="Node3D" parent="scripts" unique_id=1723175009 node_paths=PackedStringArray("notification_button", "permissions_button", "app_page_button", "hello_world_button", "reset_button", "text", "delay_label", "delay_slider", "world", "viewer", "viewing_parent")]
+[node name="game" type="Node3D" parent="scripts" unique_id=1723175009 node_paths=PackedStringArray("notification_button", "permissions_button", "app_page_button", "hello_world_button", "reset_button", "clear_save_button", "text", "delay_label", "delay_slider", "world", "viewer", "viewing_parent")]
 transform = Transform3D(0.99922216, -0.032813, 0.021871835, 0.03301667, 0.9994142, -0.009016852, -0.021563161, 0.009731951, 0.9997201, 0, 0, 0)
 script = ExtResource("1_tbgi4")
 notification_button = NodePath("../../ui/notification_button")
@@ -35,6 +36,7 @@ permissions_button = NodePath("../../ui/permissions_button")
 app_page_button = NodePath("../../ui/app_page")
 hello_world_button = NodePath("../../ui/hello_world")
 reset_button = NodePath("../../ui/reset")
+clear_save_button = NodePath("../../ui/clear_save")
 text = NodePath("../../ui/log")
 delay_label = NodePath("../../ui/delay_widget/Label")
 delay_slider = NodePath("../../ui/delay_widget/HSlider")
@@ -45,6 +47,7 @@ item_focus_sound = ExtResource("3_o6xl0")
 mailbox_scene = ExtResource("6_o6xl0")
 gameboy_package_scene = ExtResource("5_tipki")
 gameboy_scene = ExtResource("5_tefeu")
+game_content = ExtResource("8_85g3d")
 
 [node name="root" type="Node3D" parent="." unique_id=1193364249]
 
@@ -117,10 +120,10 @@ text = "OPEN APP PAGE"
 [node name="hello_world" type="Button" parent="ui" unique_id=235535162]
 visible = false
 layout_mode = 0
-offset_left = 470.0
-offset_top = 22.0
-offset_right = 892.0
-offset_bottom = 122.0
+offset_left = 299.0
+offset_top = 136.0
+offset_right = 721.0
+offset_bottom = 236.0
 theme = ExtResource("5_85g3d")
 text = "HELLO WORLD
 "
@@ -133,6 +136,16 @@ offset_right = 718.0
 offset_bottom = 117.0
 theme = ExtResource("5_85g3d")
 text = "RESET"
+
+[node name="clear_save" type="Button" parent="ui" unique_id=1432198708]
+layout_mode = 0
+offset_left = 296.0
+offset_top = 135.0
+offset_right = 718.0
+offset_bottom = 235.0
+theme = ExtResource("5_85g3d")
+text = "CLEAR SAVE
+"
 
 [node name="delay_widget" type="Control" parent="ui" unique_id=2053507285]
 visible = false
@@ -167,9 +180,9 @@ text = "Delay: 0"
 [node name="log" type="Label" parent="ui" unique_id=1561684694]
 visible = false
 layout_mode = 0
-offset_left = 466.0
-offset_top = 33.0
-offset_right = 1124.0
-offset_bottom = 192.0
+offset_left = 762.0
+offset_top = 22.0
+offset_right = 1420.0
+offset_bottom = 181.0
 theme = ExtResource("5_85g3d")
 text = "INFO"

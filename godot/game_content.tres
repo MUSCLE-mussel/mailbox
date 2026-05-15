@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="GameContent" format=3 uid="uid://bdpvx0wbh44ma"]
+
+[ext_resource type="Script" uid="uid://dm1k42v1yuds5" path="res://scripts/game_content.gd" id="1_v7l2n"]
+[ext_resource type="PackedScene" uid="uid://t0m4nk8ico0q" path="res://scenes/packages/gameboy_package.tscn" id="1_w8ylp"]
+[ext_resource type="PackedScene" uid="uid://bj0a6w6yln2jn" path="res://scenes/gameboy.tscn" id="2_xomck"]
+
+[resource]
+script = ExtResource("1_v7l2n")
+items = Dictionary[StringName, PackedScene]({
+&"gameboy": ExtResource("1_w8ylp"),
+&"next_item": ExtResource("2_xomck")
+})
+metadata/_custom_type_script = "uid://dm1k42v1yuds5"

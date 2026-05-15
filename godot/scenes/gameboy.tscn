@@ -232,6 +232,7 @@ viewing_base_rotation = Vector3(0, 0.38397244, 0.06981317)
 viewing_base_scale = Vector3(5.681, 5.681, 5.681)
 origin = NodePath("origin")
 can_rotate = true
+validate_item_viewed = true
 
 [node name="Skeleton3D" parent="Armature" parent_id_path=PackedInt32Array(641643262) index="0" unique_id=753844770]
 bones/1/position = Vector3(0.64335763, 1.4463114, 2.9802322e-08)
@@ -334,7 +335,7 @@ title_sound = ExtResource("4_0coaa")
 sound_position = NodePath("../../Armature")
 
 [node name="screen" type="Sprite3D" parent="." index="12" unique_id=1020907301]
-transform = Transform3D(0.118636616, 0, 0, 0, 0.118636616, 0, 0, 0, 0.175, 0, 0.12838697, 0.05031857)
+transform = Transform3D(0.118636616, 0, 0, 0, 0.118636616, 0, 0, 0, 0.175, 0, 0.128, 0.052)
 texture = ExtResource("4_ldcwh")
 
 [node name="origin" type="Marker3D" parent="." index="13" unique_id=198923779]
